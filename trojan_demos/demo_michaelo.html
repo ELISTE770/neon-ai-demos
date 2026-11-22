@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>דמו מתאם מטבח בוטיק בעבודת יד — מיכאלו מטבחי בוטיק</title>
+  <style>
+    :root { --bg:#0a090d; --card:#16141e; --cyan:#22d3ee; --emerald:#10b981; --amber:#f59e0b; --text:#f1f5f9; --muted:#94a3b8; }
+    * { box-sizing:border-box; }
+    body { margin:0; padding:24px 16px; background:radial-gradient(circle at top right,rgba(245,158,11,0.1),transparent 45%),var(--bg); color:var(--text); font-family:"Segoe UI",Tahoma,Arial,sans-serif; }
+    .wrap { max-width:1080px; margin:0 auto; }
+    .banner { display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:12px; background:rgba(245,158,11,0.12); border:1px solid rgba(245,158,11,0.42); border-radius:14px; padding:14px 18px; margin-bottom:20px; }
+    .grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(340px,1fr)); gap:18px; }
+    .card { background:var(--card); border:1px solid rgba(245,158,11,0.22); border-radius:16px; padding:20px; display:flex; flex-direction:column; gap:14px; }
+    h2 { margin:0; font-size:1.12rem; color:var(--amber); }
+    label { display:block; font-size:0.86rem; color:var(--muted); margin-bottom:5px; }
+    input, select { width:100%; padding:10px 12px; border-radius:9px; border:1px solid rgba(148,163,184,0.3); background:#08070b; color:var(--text); font-size:0.94rem; }
+    .result-box { background:#08070b; border:1px solid rgba(16,185,129,0.35); border-radius:12px; padding:14px; }
+    .chat-log { height:285px; overflow-y:auto; background:#08070b; border:1px solid rgba(245,158,11,0.22); border-radius:12px; padding:12px; display:flex; flex-direction:column; gap:10px; }
+    .msg { max-width:86%; padding:10px 13px; border-radius:12px; font-size:0.9rem; line-height:1.5; }
+    .msg.bot { align-self:flex-start; background:rgba(245,158,11,0.12); border:1px solid rgba(245,158,11,0.28); }
+    .msg.user { align-self:flex-end; background:rgba(16,185,129,0.2); border:1px solid rgba(16,185,129,0.4); }
+    .quick-row { display:flex; flex-wrap:wrap; gap:6px; }
+    .chip-btn { background:rgba(255,255,255,0.05); border:1px solid rgba(245,158,11,0.35); color:var(--text); border-radius:999px; padding:5px 11px; font-size:0.8rem; cursor:pointer; }
+    .chat-input-row { display:flex; gap:8px; }
+    .btn { padding:10px 16px; border-radius:9px; border:none; font-weight:700; cursor:pointer; background:var(--emerald); color:#04150e; font-size:0.9rem; }
+    .btn-amber { background:var(--amber); color:#1a1003; }
+    .status-ok { color:var(--emerald); font-weight:700; font-size:0.9rem; display:none; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="banner">
+      <div>
+        <strong style="color:var(--amber)">דמו חי ("הסוס הטרויאני") עבור מיכאלו מטבחי בוטיק — הרצליה פיתוח</strong>
+        <div style="font-size:0.86rem;color:var(--muted)">מתאם מטבח מודרני / פרובנס / נירוסטה / כפרי + ארונות אמבטיה וחדרי שינה • גלגלי הפלדה 16</div>
+      </div>
+      <a class="btn btn-amber" href="../geo_audits/audit_michaelo.html" style="text-decoration:none">צפה בדו"ח GEO המלא</a>
+    </div>
+
+    <div class="grid">
+      <section class="card">
+        <h2>1. התאמת סגנון, היקף ומועד לפגישה באולם התצוגה</h2>
+        <div>
+          <label for="mi-style">סגנון מועדף בעבודת יד</label>
+          <select id="mi-style">
+            <option value="modern">מטבח מודרני בעבודת יד</option>
+            <option value="provence">מטבח פרובנס / מטבח כפרי</option>
+            <option value="stainless">מטבח נירוסטה / מטבח אקלקטי</option>
+            <option value="bath">חדרי שינה וארונות אמבטיה בהתאמה אישית</option>
+          </select>
+        </div>
+        <div>
+          <label for="mi-meters">אורך מטבח משוער (מטר רץ + אי): <strong id="mi-lbl" style="color:var(--amber)">10 מ'</strong></label>
+          <input type="range" id="mi-meters" min="4" max="22" step="1" value="10" />
+        </div>
+        <div class="result-box" id="mi-out"></div>
+        <div class="chat-input-row">
+          <input type="text" id="mi-phone" placeholder="שם + נייד לתיאום פגישה בהרצליה פיתוח (דמו)" />
+          <button class="btn" id="mi-book">קבע פגישת תכנון</button>
+        </div>
+        <div id="mi-confirm" class="status-ok">✓ הפנייה סווגה לפי סגנון ומידות לאולם מיכאלו (09-9506703 / michaelo.kit@gmail.com).</div>
+      </section>
+
+      <section class="card">
+        <h2>2. יועץ AI של מיכאלו מטבחי בוטיק</h2>
+        <div class="chat-log" id="mi-log">
+          <div class="msg bot">שלום! אני העוזר של <strong>מיכאלו מטבחי בוטיק</strong> ברח' גלגלי הפלדה 16, הרצליה פיתוח. מעוניינים במטבח מודרני, פרובנס, כפרי או נירוסטה בעבודת יד?</div>
+        </div>
+        <div class="quick-row">
+          <button class="chip-btn" data-q="האם אתם מייצרים גם מטבחי נירוסטה?">מטבחי נירוסטה בעבודת יד</button>
+          <button class="chip-btn" data-q="אפשר להזמין דרככם גם ארונות אמבטיה וחדרי שינה?">ארונות אמבטיה וחדרי שינה</button>
+          <button class="chip-btn" data-q="מה כתובת אולם התצוגה והטלפון?">אולם תצוגה בהרצליה פיתוח</button>
+        </div>
+        <div class="chat-input-row">
+          <input type="text" id="mi-input" placeholder="כתוב שאלה על סגנונות, זמני ייצור או פגישה באולם..." />
+          <button class="btn btn-amber" id="mi-send">שלח</button>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <script>
+    const st = document.getElementById("mi-style");
+    const mt = document.getElementById("mi-meters");
+    const out = document.getElementById("mi-out");
+
+    function updateMi() {
+      const s = st.value, m = Number(mt.value);
+      document.getElementById("mi-lbl").textContent = m + " מ'";
+      const low = m * 8500, high = m * 14500;
+      const names = { modern: "מטבח מודרני", provence: "פרובנס / כפרי", stainless: "נירוסטה / אקלקטי", bath: "ארונות אמבטיה וחדרי שינה" };
+      out.innerHTML = `<div style="color:var(--emerald);font-weight:800">${names[s]} — טווח תקציב ראשוני: ₪${low.toLocaleString("he-IL")} – ₪${high.toLocaleString("he-IL")}</div><div style="font-size:0.86rem;color:var(--muted);margin-top:4px">ייצור בוטיק מותאם אישית כולל פגישת אפיון עם תכניות באולם התצוגה בהרצליה פיתוח.</div>`;
+    }
+    [st, mt].forEach(x => x.addEventListener("input", updateMi));
+    updateMi();
+
+    document.getElementById("mi-book").addEventListener("click", () => {
+      document.getElementById("mi-confirm").style.display = "block";
+    });
+
+    const log = document.getElementById("mi-log");
+    const inp = document.getElementById("mi-input");
+    function getReply(q) {
+      const s = q.toLowerCase();
+      if (s.includes("נירוסטה")) {
+        return "כן — מיכאלו מתמחה בין השאר במטבחי נירוסטה, מטבחים אקלקטיים, מודרניים וכפריים/פרובנס המיוצרים בעבודת יד.";
+      }
+      if (s.includes("אמבטי") || s.includes("שינה")) {
+        return "בהחלט! מעבר למטבח עצמו, הסטודיו מתכנן ומייצר גם חדרי שינה וארונות אמבטיה בהתאמה אישית ובאותה רמת גימור.";
+      }
+      if (s.includes("כתוב") || s.includes("הרצלי") || s.includes("אולם") || s.includes("טלפ")) {
+        return "אולם התצוגה נמצא ברח' גלגלי הפלדה 16, הרצליה פיתוח. טלפון ישיר: 09-9506703 | מייל: michaelo.kit@gmail.com.";
+      }
+      return "בחרו מימין את הסגנון והמידות והשאירו טלפון לתיאום פגישה באולם בהרצליה פיתוח.";
+    }
+    function send(text) {
+      const val = (text ?? inp.value).trim();
+      if (!val) return;
+      const u = document.createElement("div");
+      u.className = "msg user";
+      u.textContent = val;
+      log.appendChild(u);
+      if (!text) inp.value = "";
+      setTimeout(() => {
+        const b = document.createElement("div");
+        b.className = "msg bot";
+        b.textContent = getReply(val);
+        log.appendChild(b);
+        log.scrollTop = log.scrollHeight;
+      }, 220);
+    }
+    document.getElementById("mi-send").addEventListener("click", () => send());
+    inp.addEventListener("keydown", e => { if (e.key === "Enter") send(); });
+    document.querySelectorAll(".chip-btn").forEach(b => b.addEventListener("click", () => send(b.dataset.q)));
+  </script>
+</body>
+</html>

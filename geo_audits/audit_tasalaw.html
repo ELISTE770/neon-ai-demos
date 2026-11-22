@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>דו"ח אבחון פורנזי GEO והמרה — משרד עו"ד אביב טסה</title>
+  <style>
+    :root { --bg:#070b14; --card:#0f172a; --text:#e2e8f0; --muted:#94a3b8; --cyan:#22d3ee; --emerald:#10b981; --amber:#f59e0b; --rose:#f43f5e; }
+    * { box-sizing:border-box; }
+    body { margin:0; padding:28px 18px; background:var(--bg); color:var(--text); font-family:"Segoe UI",Tahoma,Arial,sans-serif; line-height:1.6; }
+    .sheet { max-width:920px; margin:0 auto; background:var(--card); border:1px solid rgba(34,211,238,0.25); border-radius:16px; padding:30px; box-shadow:0 0 36px rgba(34,211,238,0.12); }
+    .top { display:flex; flex-wrap:wrap; justify-content:space-between; gap:14px; border-bottom:1px solid rgba(148,163,184,0.2); padding-bottom:18px; margin-bottom:22px; }
+    .badge { display:inline-block; padding:4px 12px; border-radius:999px; font-size:0.8rem; font-weight:700; background:rgba(244,63,94,0.14); color:var(--rose); border:1px solid rgba(244,63,94,0.4); }
+    .badge.ok { background:rgba(16,185,129,0.14); color:var(--emerald); border-color:rgba(16,185,129,0.4); }
+    h1 { margin:0 0 6px; font-size:1.55rem; color:#fff; }
+    h2 { margin:22px 0 10px; font-size:1.15rem; color:var(--cyan); }
+    .kpis { display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:12px; margin:18px 0; }
+    .kpi { background:rgba(7,11,20,0.75); border:1px solid rgba(148,163,184,0.2); border-radius:12px; padding:14px; }
+    .kpi span { display:block; font-size:0.8rem; color:var(--muted); }
+    .kpi strong { font-size:1.35rem; color:var(--amber); }
+    .box { background:rgba(7,11,20,0.72); border:1px solid rgba(148,163,184,0.2); border-radius:12px; padding:16px; margin-bottom:14px; }
+    ul { margin:8px 0 0; padding-inline-start:20px; }
+    li { margin-bottom:7px; }
+    .cta-box { background:linear-gradient(135deg,rgba(16,185,129,0.16),rgba(34,211,238,0.12)); border:1px solid rgba(16,185,129,0.45); border-radius:14px; padding:20px; margin-top:22px; }
+    .actions { display:flex; gap:10px; flex-wrap:wrap; margin-top:14px; }
+    .btn { padding:10px 18px; border-radius:9px; border:none; font-weight:700; cursor:pointer; text-decoration:none; font-size:0.92rem; }
+    .btn-primary { background:var(--emerald); color:#04150e; }
+    .btn-sec { background:rgba(34,211,238,0.15); color:var(--cyan); border:1px solid var(--cyan); }
+    @media print {
+      body { background:#fff; color:#111; padding:0; }
+      .sheet { background:#fff; border:none; box-shadow:none; color:#111; }
+      .box, .kpi, .cta-box { background:#f8fafc; border-color:#cbd5e1; color:#111; }
+      .actions { display:none; }
+    }
+  </style>
+</head>
+<body>
+  <main class="sheet">
+    <header class="top">
+      <div>
+        <span class="badge">פגיעה ברושם ראשוני + היעדר סינון נציגויות דיירים</span>
+        <h1>דו"ח GEO פורנזי: משרד עורכי דין אביב טסה</h1>
+        <div style="color:var(--muted);font-size:0.9rem;">
+          אתר נבדק: <a href="https://tasalaw.co.il/" target="_blank" style="color:var(--cyan)" dir="ltr">https://tasalaw.co.il/</a> • תחום: מקרקעין, פינוי-בינוי ותמ"א 38 • רמת גן &amp; קריית מוצקין
+        </div>
+      </div>
+      <div><span class="badge ok">חבילת תיקון מומלצת: ₪14,000</span></div>
+    </header>
+
+    <section class="kpis">
+      <div class="kpi"><span>ציון נראות AI (GEO) נוכחי</span><strong style="color:var(--rose)">38 / 100</strong></div>
+      <div class="kpi"><span>שגיאת טעינה ב-Hero</span><strong style="color:var(--rose)">ERR_ABORTED</strong></div>
+      <div class="kpi"><span>מיקום משרדים בסכמה</span><strong>סניף מרכז + צפון חסרים</strong></div>
+      <div class="kpi"><span>זמן תיקון והטמעה</span><strong style="color:var(--emerald)">48 שעות</strong></div>
+    </section>
+
+    <h2>1. ממצאים פורנזיים שנצפו באתר tasalaw.co.il</h2>
+    <div class="box">
+      <ul>
+        <li><strong>שגיאת וידאו בולטת מעל הקפל (Above the Fold):</strong> קובץ הווידאו הראשי בדף הבית נכשל בטעינה (<code>ERR_ABORTED</code>) ומשאיר אזור לבן ריק מתחת לתפריט — המבקר נתקל בחלל ריק לפני שהוא מבין את סמכות המשרד.</li>
+        <li><strong>אין מסנן AI בין 4 סוגי הפונים הקריטיים:</strong> נציגות דיירים בפרויקט פינוי-בינוי, יזם נדל"ן, דייר סרבן / תביעה מול המפקח, או דייר קיים שמחפש את פורטל <code>getStatus</code> — כולם נוחתים על אותו טופס סטטי בן 3 שדות בלי וואטסאפ מהיר.</li>
+        <li><strong>טקסט צפוף ללא מקטע FAQ מובנה:</strong> נציגויות בניינים שואלות את ChatGPT ו-Gemini שאלות ישירות (<em>"מה הרוב הדרוש לפינוי-בינוי?"</em>, <em>"מי משלם את שכר הטרחה של עו"ד הדיירים?"</em>). בהיעדר <code>FAQPage</code> קצר וממוקד, מנועי AI מצטטים משרדים מתחרים.</li>
+        <li><strong>נתוני Local SEO חסרים לשני הסניפים:</strong> הסכמה הנוכחית (<code>WebPage</code>) אינה מגדירה <code>LegalService</code> ייעודית לרמת גן (אבא הלל 7) ולקריית מוצקין (קדיש לוז 11).</li>
+      </ul>
+    </div>
+
+    <h2>2. למה ההחזר על ההשקעה מיידי במשרד התחדשות עירונית?</h2>
+    <div class="box">
+      <p style="margin:0">
+        עסקה אחת של ייצוג נציגות בניין בפינוי-בינוי או תיק ליטיגציה מקרקעין שווה פי 5–15 מעלות החבילה. הפיכת דף הבית מחלל לבן שבור לעמדת אבחון מהירה עם עוזר AI לנציגויות דיירים מחזירה את ההשקעה מליד איכותי אחד.
+      </p>
+    </div>
+
+    <div class="cta-box">
+      <h2 style="margin-top:0;color:var(--emerald)">3. תוכנית ביצוע מהירה (48 שעות) — ₪14,000 חד-פעמי</h2>
+      <p style="margin:6px 0;">
+        תיקון ה-Hero השבור בדף הבית, בניית סכמות <code>LegalService</code> לשני הסניפים + <code>FAQPage</code> ממוקד התחדשות עירונית, והטמעת עוזר AI אינטראקטיבי לסינון נציגויות דיירים ויזמים והפנייה לפורטל הדיירים.
+      </p>
+      <div class="actions">
+        <a class="btn btn-primary" href="../trojan_demos/demo_tasalaw.html" target="_blank">פתח דמו AI שהוכן למשרד אביב טסה</a>
+        <button class="btn btn-sec" onclick="window.print()">הדפס / שמור כ-PDF לשליחה</button>
+      </div>
+    </div>
+  </main>
+</body>
+</html>

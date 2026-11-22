@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>דמו יועץ אסתטיקה AI — מרכז רפואי VIV הרצליה פיתוח</title>
+  <style>
+    :root { --bg:#0b0a12; --card:#151324; --cyan:#22d3ee; --emerald:#10b981; --purple:#c084fc; --text:#f1f5f9; --muted:#94a3b8; }
+    * { box-sizing:border-box; }
+    body { margin:0; padding:24px 16px; background:radial-gradient(circle at top right,rgba(192,132,252,0.12),transparent 45%),var(--bg); color:var(--text); font-family:"Segoe UI",Tahoma,Arial,sans-serif; }
+    .wrap { max-width:1080px; margin:0 auto; }
+    .banner { display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:12px; background:rgba(192,132,252,0.12); border:1px solid rgba(192,132,252,0.4); border-radius:14px; padding:14px 18px; margin-bottom:20px; }
+    .grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(340px,1fr)); gap:18px; }
+    .card { background:var(--card); border:1px solid rgba(192,132,252,0.22); border-radius:16px; padding:20px; display:flex; flex-direction:column; gap:14px; }
+    h2 { margin:0; font-size:1.12rem; color:var(--purple); }
+    label { display:block; font-size:0.86rem; color:var(--muted); margin-bottom:5px; }
+    input, select { width:100%; padding:10px 12px; border-radius:9px; border:1px solid rgba(148,163,184,0.3); background:#08070f; color:var(--text); font-size:0.94rem; }
+    .result-box { background:#08070f; border:1px solid rgba(16,185,129,0.35); border-radius:12px; padding:14px; }
+    .chat-log { height:285px; overflow-y:auto; background:#08070f; border:1px solid rgba(192,132,252,0.22); border-radius:12px; padding:12px; display:flex; flex-direction:column; gap:10px; }
+    .msg { max-width:86%; padding:10px 13px; border-radius:12px; font-size:0.9rem; line-height:1.5; }
+    .msg.bot { align-self:flex-start; background:rgba(192,132,252,0.12); border:1px solid rgba(192,132,252,0.28); }
+    .msg.user { align-self:flex-end; background:rgba(16,185,129,0.2); border:1px solid rgba(16,185,129,0.4); }
+    .quick-row { display:flex; flex-wrap:wrap; gap:6px; }
+    .chip-btn { background:rgba(255,255,255,0.05); border:1px solid rgba(192,132,252,0.35); color:var(--text); border-radius:999px; padding:5px 11px; font-size:0.8rem; cursor:pointer; }
+    .chat-input-row { display:flex; gap:8px; }
+    .btn { padding:10px 16px; border-radius:9px; border:none; font-weight:700; cursor:pointer; background:var(--emerald); color:#04150e; font-size:0.9rem; }
+    .btn-purp { background:var(--purple); color:#1a0526; }
+    .status-ok { color:var(--emerald); font-weight:700; font-size:0.9rem; display:none; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="banner">
+      <div>
+        <strong style="color:var(--purple)">דמו חי ("הסוס הטרויאני") עבור מרכז רפואי VIV — הרצליה פיתוח</strong>
+        <div style="font-size:0.86rem;color:var(--muted)">מתאים טיפולי Sofwave, פיסול פנים ומילוי, מירה דריי להזעת יתר והגיל הביולוגי • אבא אבן 8</div>
+      </div>
+      <a class="btn btn-purp" href="../geo_audits/audit_vivclinic.html" style="text-decoration:none">צפה בדו"ח GEO המלא</a>
+    </div>
+
+    <div class="grid">
+      <section class="card">
+        <h2>1. מתאים פרוטוקול אסתטי ורפואי אישי</h2>
+        <div>
+          <label for="v-goal">מה המטרה העיקרית שלך?</label>
+          <select id="v-goal">
+            <option value="sofwave">מיצוק והרמת עור הפנים/הצוואר ללא ניתוח (Sofwave)</option>
+            <option value="inject">פיסול פנים, חומרי מילוי או בוטוקס</option>
+            <option value="sweat">פתרון מתקדם להזעת יתר (מירה דריי / בוטוקס)</option>
+            <option value="body">עיצוב חיטוב שריר והצרת היקפים</option>
+            <option value="bio">תוכנית רפואית להפחתת הגיל הביולוגי וטיפול בחמצן</option>
+          </select>
+        </div>
+        <div>
+          <label for="v-time">מועד מועדף לפגישת ייעוץ</label>
+          <select id="v-time">
+            <option value="immediate">בשבוע הקרוב (זמינות מיידית)</option>
+            <option value="month">בחודש הקרוב / לקראת אירוע</option>
+          </select>
+        </div>
+        <div class="result-box" id="v-out"></div>
+        <div class="chat-input-row">
+          <input type="text" id="v-phone" placeholder="שם + נייד לתיאום ייעוץ בהרצליה פיתוח (דמו)" />
+          <button class="btn" id="v-book">המשך לקביעת פגישה</button>
+        </div>
+        <div id="v-confirm" class="status-ok">✓ הפרוטוקול נשמר ומוכן להעברה למוקד מרכז רפואי VIV (09-9569581 / info@viv.co.il).</div>
+      </section>
+
+      <section class="card">
+        <h2>2. יועץ AI דיגיטלי של מרכז רפואי VIV</h2>
+        <div class="chat-log" id="v-log">
+          <div class="msg bot">שלום! אני העוזר האישי של <strong>מרכז רפואי VIV</strong> בהרצליה פיתוח. מתעניינים בטיפול <strong>Sofwave</strong> למיצוק העור, במירה דריי להזעת יתר, הזרקות או בתוכנית הגיל הביולוגי? שאלו אותי עכשיו.</div>
+        </div>
+        <div class="quick-row">
+          <button class="chip-btn" data-q="איך עובד טיפול Sofwave ומה זמן ההחלמה?">טיפול Sofwave והחלמה</button>
+          <button class="chip-btn" data-q="איך מטפלים בהזעת יתר במירה דריי?">מירה דריי להזעת יתר</button>
+          <button class="chip-btn" data-q="מה הכתובת והטלפון בהרצליה פיתוח?">כתובת וטלפון המרפאה</button>
+        </div>
+        <div class="chat-input-row">
+          <input type="text" id="v-input" placeholder="כתוב שאלה על Sofwave, חומרי מילוי, חמצן או ייעוץ..." />
+          <button class="btn btn-purp" id="v-send">שלח</button>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <script>
+    const goal = document.getElementById("v-goal");
+    const tm = document.getElementById("v-time");
+    const out = document.getElementById("v-out");
+
+    function updateV() {
+      const g = goal.value;
+      const map = {
+        sofwave: ["טכנולוגיית Sofwave (אולטרסאונד ממוקד)", "טיפול קצר יחסית ללא זמן השבתה ממושך — מתאים להרמה ומיצוק קו הלסת, הצוואר והגבות."],
+        inject: ["פיסול פנים ומילוי מותאם אישית", "פגישת אבחון רפואית להתאמת פרופורציות טבעיות עם חומרי מילוי ובוטוקס."],
+        sweat: ["מירה דריי (miraDry) / בוטוקס להזעת יתר", "פרוטוקול ממוקד להפחתה משמעותית וארוכת טווח של הזעה בבתי השחי."],
+        body: ["חיזוק שריר והצרת היקפים", "סדרת טיפולים משולבת ללא התערבות כירורגית."],
+        bio: ["תוכנית רפואית להפחתת הגיל הביולוגי וטיפול בחמצן", "פרוטוקול אריכות ימים מתקדם בליווי רפואי מלא במרכז."],
+      };
+      const [title, desc] = map[g];
+      out.innerHTML = `<div style="color:var(--emerald);font-weight:800">מסלול מומלץ: ${title}</div><div style="font-size:0.86rem;color:var(--muted);margin-top:4px">${desc}</div>`;
+    }
+    [goal, tm].forEach(x => x.addEventListener("input", updateV));
+    updateV();
+
+    document.getElementById("v-book").addEventListener("click", () => {
+      document.getElementById("v-confirm").style.display = "block";
+    });
+
+    const log = document.getElementById("v-log");
+    const inp = document.getElementById("v-input");
+    function getReply(q) {
+      const s = q.toLowerCase();
+      if (s.includes("sofwave")) {
+        return "Sofwave משתמש באולטרסאונד ממוקד לחימום שכבת הדרמיס ועידוד ייצור קולגן חדש — ללא פגיעה בעור החיצוני ובחזרה מיידית לשגרה.";
+      }
+      if (s.includes("מירה") || s.includes("זע")) {
+        return "לטיפול בהזעת יתר המרכז מציע גם טכנולוגיית מירה דריי וגם טיפולי בוטוקס ממוקדים לפי אבחון רופא בפגישת הייעוץ.";
+      }
+      if (s.includes("כתוב") || s.includes("הרצלי") || s.includes("טלפ")) {
+        return "שדרות אבא אבן 8, בניין B, קומה 4, הרצליה פיתוח. טלפון ישיר: 09-9569581 | מייל: info@viv.co.il.";
+      }
+      return "בחרו מימין את המטרה הטיפולית שלכם והשאירו טלפון לתיאום ייעוץ רפואי אישי בהרצליה פיתוח.";
+    }
+    function send(text) {
+      const val = (text ?? inp.value).trim();
+      if (!val) return;
+      const u = document.createElement("div");
+      u.className = "msg user";
+      u.textContent = val;
+      log.appendChild(u);
+      if (!text) inp.value = "";
+      setTimeout(() => {
+        const b = document.createElement("div");
+        b.className = "msg bot";
+        b.textContent = getReply(val);
+        log.appendChild(b);
+        log.scrollTop = log.scrollHeight;
+      }, 220);
+    }
+    document.getElementById("v-send").addEventListener("click", () => send());
+    inp.addEventListener("keydown", e => { if (e.key === "Enter") send(); });
+    document.querySelectorAll(".chip-btn").forEach(b => b.addEventListener("click", () => send(b.dataset.q)));
+  </script>
+</body>
+</html>

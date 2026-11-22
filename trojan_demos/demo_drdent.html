@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>דמו יועץ AI להשתלות ושיקום הפה — מרפאת ד"ר דן קוזק</title>
+  <style>
+    :root { --bg:#07111a; --card:#0d1c29; --cyan:#22d3ee; --emerald:#10b981; --amber:#f59e0b; --text:#e2e8f0; --muted:#94a3b8; }
+    * { box-sizing:border-box; }
+    body { margin:0; padding:24px 16px; background:radial-gradient(circle at top right,rgba(34,211,238,0.12),transparent 45%),var(--bg); color:var(--text); font-family:"Segoe UI",Tahoma,Arial,sans-serif; }
+    .wrap { max-width:1080px; margin:0 auto; }
+    .banner { display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:12px; background:rgba(34,211,238,0.12); border:1px solid rgba(34,211,238,0.4); border-radius:14px; padding:14px 18px; margin-bottom:20px; }
+    .grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(340px,1fr)); gap:18px; }
+    .card { background:var(--card); border:1px solid rgba(34,211,238,0.22); border-radius:16px; padding:20px; display:flex; flex-direction:column; gap:14px; }
+    h2 { margin:0; font-size:1.12rem; color:var(--cyan); }
+    label { display:block; font-size:0.86rem; color:var(--muted); margin-bottom:5px; }
+    input, select { width:100%; padding:10px 12px; border-radius:9px; border:1px solid rgba(148,163,184,0.3); background:#060c14; color:var(--text); font-size:0.94rem; }
+    .result-box { background:#060c14; border:1px solid rgba(16,185,129,0.35); border-radius:12px; padding:14px; }
+    .chat-log { height:285px; overflow-y:auto; background:#060c14; border:1px solid rgba(34,211,238,0.2); border-radius:12px; padding:12px; display:flex; flex-direction:column; gap:10px; }
+    .msg { max-width:86%; padding:10px 13px; border-radius:12px; font-size:0.9rem; line-height:1.5; }
+    .msg.bot { align-self:flex-start; background:rgba(34,211,238,0.12); border:1px solid rgba(34,211,238,0.28); }
+    .msg.user { align-self:flex-end; background:rgba(16,185,129,0.2); border:1px solid rgba(16,185,129,0.4); }
+    .quick-row { display:flex; flex-wrap:wrap; gap:6px; }
+    .chip-btn { background:rgba(255,255,255,0.05); border:1px solid rgba(34,211,238,0.3); color:var(--text); border-radius:999px; padding:5px 11px; font-size:0.8rem; cursor:pointer; }
+    .chat-input-row { display:flex; gap:8px; }
+    .btn { padding:10px 16px; border-radius:9px; border:none; font-weight:700; cursor:pointer; background:var(--emerald); color:#04150e; font-size:0.9rem; }
+    .btn-cyan { background:var(--cyan); color:#04151a; }
+    .status-ok { color:var(--emerald); font-weight:700; font-size:0.9rem; display:none; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="banner">
+      <div>
+        <strong style="color:var(--cyan)">דמו חי ("הסוס הטרויאני") עבור מרפאת שיניים ד"ר דן קוזק — רעננה</strong>
+        <div style="font-size:0.86rem;color:var(--muted)">מיון מטופלים להשתלות שיניים, שיקום הפה, ציפויים אסתטיים והרדמה כללית • אלכסנדר זרחין 10, רעננה</div>
+      </div>
+      <a class="btn btn-cyan" href="../geo_audits/audit_drdent.html" style="text-decoration:none">צפה בדו"ח GEO המלא</a>
+    </div>
+
+    <div class="grid">
+      <section class="card">
+        <h2>1. אבחון ומיון טיפול ראשוני (לפני קביעת תור)</h2>
+        <div>
+          <label for="d-treat">תחום הטיפול המבוקש</label>
+          <select id="d-treat">
+            <option value="implants">השתלת שיניים / שיקום מלא על גבי שתלים</option>
+            <option value="anesthesia">טיפולי שיניים בהרדמה כללית (לסובלים מחרדה דנטלית)</option>
+            <option value="veneers">טיפולים אסתטיים וציפויי חרסינה</option>
+            <option value="rehab">שיקום הפה מורכב</option>
+          </select>
+        </div>
+        <div>
+          <label for="d-teeth">היקף משוער (מספר שיניים / שתלים): <strong id="d-lbl" style="color:var(--cyan)">4 יח'</strong></label>
+          <input type="range" id="d-teeth" min="1" max="16" step="1" value="4" />
+        </div>
+        <div class="result-box" id="d-out"></div>
+        <div class="chat-input-row">
+          <input type="text" id="d-phone" placeholder="שם + נייד לתיאום בדיקת התאמה (דמו)" />
+          <button class="btn" id="d-book">תאם שיחת ייעוץ</button>
+        </div>
+        <div id="d-confirm" class="status-ok">✓ הבקשה סווגה מראש ומוכנה לצוות המרפאה ברעננה (072-3717372 / 09-7411426).</div>
+      </section>
+
+      <section class="card">
+        <h2>2. עוזר AI זמין למטופלים (24/7)</h2>
+        <div class="chat-log" id="d-log">
+          <div class="msg bot">שלום! אני העוזר החכם של <strong>מרפאת שיניים ד"ר דן קוזק</strong> ברעננה. אשמח לסייע במידע ראשוני על השתלות שיניים, שיקום הפה, ציפויים או טיפולים בהרדמה כללית.</div>
+        </div>
+        <div class="quick-row">
+          <button class="chip-btn" data-q="האם ניתן לעבור את הטיפול בהרדמה כללית?">טיפול בהרדמה כללית</button>
+          <button class="chip-btn" data-q="איפה המרפאה ממוקמת ומה הטלפונים?">כתובת ברעננה וטלפונים</button>
+          <button class="chip-btn" data-q="איזה הכנה נדרשת לפני פגישת השתלות?">הכנה לפגישת השתלות</button>
+        </div>
+        <div class="chat-input-row">
+          <input type="text" id="d-input" placeholder="כתוב שאלה על השתלות, הרדמה כללית או תיאום בדיקה..." />
+          <button class="btn btn-cyan" id="d-send">שלח</button>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <script>
+    const tr = document.getElementById("d-treat");
+    const th = document.getElementById("d-teeth");
+    const out = document.getElementById("d-out");
+
+    function updateD() {
+      const t = tr.value;
+      const n = Number(th.value);
+      document.getElementById("d-lbl").textContent = n + " יח'";
+      if (t === "implants") {
+        const low = n * 4200, high = n * 6500;
+        out.innerHTML = `<div style="color:var(--emerald);font-weight:800">אומדן ראשוני להשתלה ושיקום (${n} יח'): ₪${low.toLocaleString("he-IL")} – ₪${high.toLocaleString("he-IL")}</div><div style="font-size:0.86rem;color:var(--muted);margin-top:4px">כפוף לצילום CT ובדיקה רפואית במרפאה לתכנון ממוחשב מדויק.</div>`;
+      } else if (t === "anesthesia") {
+        out.innerHTML = `<div style="color:var(--cyan);font-weight:800">מסלול הרדמה כללית מלאה (מתאים לחרדה דנטלית)</div><div style="font-size:0.86rem;color:var(--muted);margin-top:4px">מאפשר לרכז מספר רב של טיפולים/השתלות ביום אחד בנוכחות רופא מרדים מומחה.</div>`;
+      } else if (t === "veneers") {
+        const low = n * 3000, high = n * 4800;
+        out.innerHTML = `<div style="color:var(--amber);font-weight:800">אסתטיקה וציפויים (${n} שיניים): ₪${low.toLocaleString("he-IL")} – ₪${high.toLocaleString("he-IL")}</div><div style="font-size:0.86rem;color:var(--muted);margin-top:4px">התאמת גוון ופרופורציה אישית בפגישת ייעוץ אסתטי.</div>`;
+      } else {
+        out.innerHTML = `<div style="color:var(--emerald);font-weight:800">תיק שיקום הפה (${n} יח')</div><div style="font-size:0.86rem;color:var(--muted);margin-top:4px">הפניה לפגישת מיפוי קליני מקיפה עם ד"ר דן קוזק.</div>`;
+      }
+    }
+    [tr, th].forEach(x => x.addEventListener("input", updateD));
+    updateD();
+
+    document.getElementById("d-book").addEventListener("click", () => {
+      document.getElementById("d-confirm").style.display = "block";
+    });
+
+    const log = document.getElementById("d-log");
+    const inp = document.getElementById("d-input");
+    function getReply(q) {
+      const s = q.toLowerCase();
+      if (s.includes("הרדמ")) {
+        return "כן, במרפאה מבוצעים טיפולי שיניים בהרדמה כללית למטופלים עם חרדה דנטלית או תוכניות טיפול מורכבות, כדי לעבור את ההליך ברוגע ובמינימום מפגשים.";
+      }
+      if (s.includes("כתוב") || s.includes("רעננ") || s.includes("טלפ")) {
+        return "המרפאה ממוקמת ברח' אלכסנדר זרחין 10 קומה א', בית קורקס א.ת. רעננה. טלפונים: 072-3717372 / 09-7411426.";
+      }
+      if (s.includes("הכנ") || s.includes("השתל")) {
+        return "אם יש לכם צילום פנורמי או CT עדכני, מומלץ להביא אותו לבדיקה הראשונה; במידת הצורך נכווין אתכם במקום לצילום לפני תחילת התכנון.";
+      }
+      return "בחרו מימין את סוג הטיפול המבוקש והשאירו טלפון לחזרה מהירה מצוות המרפאה ברעננה.";
+    }
+    function send(text) {
+      const val = (text ?? inp.value).trim();
+      if (!val) return;
+      const u = document.createElement("div");
+      u.className = "msg user";
+      u.textContent = val;
+      log.appendChild(u);
+      if (!text) inp.value = "";
+      setTimeout(() => {
+        const b = document.createElement("div");
+        b.className = "msg bot";
+        b.textContent = getReply(val);
+        log.appendChild(b);
+        log.scrollTop = log.scrollHeight;
+      }, 220);
+    }
+    document.getElementById("d-send").addEventListener("click", () => send());
+    inp.addEventListener("keydown", e => { if (e.key === "Enter") send(); });
+    document.querySelectorAll(".chip-btn").forEach(b => b.addEventListener("click", () => send(b.dataset.q)));
+  </script>
+</body>
+</html>

@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>דמו סוכן AI ומסנן התחדשות עירונית — משרד עו"ד אביב טסה</title>
+  <style>
+    :root { --bg:#080d18; --card:#10192b; --cyan:#22d3ee; --emerald:#10b981; --amber:#f59e0b; --text:#e2e8f0; --muted:#94a3b8; }
+    * { box-sizing:border-box; }
+    body { margin:0; padding:24px 16px; background:radial-gradient(circle at top right,rgba(34,211,238,0.12),transparent 45%),var(--bg); color:var(--text); font-family:"Segoe UI",Tahoma,Arial,sans-serif; }
+    .wrap { max-width:1080px; margin:0 auto; }
+    .banner { display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:12px; background:rgba(245,158,11,0.12); border:1px solid rgba(245,158,11,0.45); border-radius:14px; padding:14px 18px; margin-bottom:20px; }
+    .grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(340px,1fr)); gap:18px; }
+    .card { background:var(--card); border:1px solid rgba(34,211,238,0.22); border-radius:16px; padding:20px; display:flex; flex-direction:column; gap:14px; }
+    h2 { margin:0; font-size:1.12rem; color:var(--cyan); }
+    label { display:block; font-size:0.86rem; color:var(--muted); margin-bottom:5px; }
+    input, select { width:100%; padding:10px 12px; border-radius:9px; border:1px solid rgba(148,163,184,0.3); background:#060c14; color:var(--text); font-size:0.94rem; }
+    .result-box { background:#060c14; border:1px solid rgba(16,185,129,0.35); border-radius:12px; padding:14px; }
+    .chat-log { height:290px; overflow-y:auto; background:#060c14; border:1px solid rgba(34,211,238,0.2); border-radius:12px; padding:12px; display:flex; flex-direction:column; gap:10px; }
+    .msg { max-width:86%; padding:10px 13px; border-radius:12px; font-size:0.9rem; line-height:1.5; }
+    .msg.bot { align-self:flex-start; background:rgba(34,211,238,0.12); border:1px solid rgba(34,211,238,0.28); }
+    .msg.user { align-self:flex-end; background:rgba(16,185,129,0.2); border:1px solid rgba(16,185,129,0.4); }
+    .quick-row { display:flex; flex-wrap:wrap; gap:6px; }
+    .chip-btn { background:rgba(255,255,255,0.05); border:1px solid rgba(34,211,238,0.3); color:var(--text); border-radius:999px; padding:5px 11px; font-size:0.8rem; cursor:pointer; }
+    .chat-input-row { display:flex; gap:8px; }
+    .btn { padding:10px 16px; border-radius:9px; border:none; font-weight:700; cursor:pointer; background:var(--emerald); color:#04150e; font-size:0.9rem; }
+    .btn-cyan { background:var(--cyan); color:#04151a; }
+    .status-ok { color:var(--emerald); font-weight:700; font-size:0.9rem; display:none; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="banner">
+      <div>
+        <strong style="color:var(--amber)">דמו חי ("הסוס הטרויאני") עבור משרד עו"ד אביב טסה — מקרקעין והתחדשות עירונית</strong>
+        <div style="font-size:0.86rem;color:var(--muted)">מחליף את החלל הלבן השבור ב-Hero בעמדת סינון AI לנציגויות דיירים, יזמים וליטיגציית נדל"ן • רמת גן &amp; קריית מוצקין</div>
+      </div>
+      <a class="btn btn-cyan" href="../geo_audits/audit_tasalaw.html" style="text-decoration:none">צפה בדו"ח GEO המלא</a>
+    </div>
+
+    <div class="grid">
+      <section class="card">
+        <h2>1. מסנן תיקים ואבחון מוכנות תוך 30 שניות</h2>
+        <div>
+          <label for="case-role">מי הפונה?</label>
+          <select id="case-role">
+            <option value="tenants">נציגות דיירים / ועד בית — פינוי-בינוי או תמ"א 38</option>
+            <option value="developer">יזם נדל"ן / קבלן — ליווי פרויקט, תכנון ובנייה והיטלי השבחה</option>
+            <option value="litigation">סכסוך שכנים / דייר סרבן / תביעה בפני המפקח או ליטיגציה</option>
+            <option value="existing">דייר בפרויקט קיים (מעוניין במעקב סטטוס getStatus)</option>
+          </select>
+        </div>
+        <div>
+          <label for="units-count">מספר דירות במתחם / בבניין: <strong id="units-lbl" style="color:var(--cyan)">48 דירות</strong></label>
+          <input type="range" id="units-count" min="4" max="300" step="2" value="48" />
+        </div>
+        <div>
+          <label for="branch-pref">סניף מועדף לפגישת ייעוץ</label>
+          <select id="branch-pref">
+            <option value="rg">סניף מרכז — דרך אבא הלל 7, רמת גן</option>
+            <option value="km">סניף צפון — קדיש לוז 11, קריית מוצקין</option>
+          </select>
+        </div>
+        <div class="result-box" id="tasa-out"></div>
+        <div class="chat-input-row">
+          <input type="text" id="l-phone" placeholder="שם + נייד לתיאום שיחה ראשונית (דמו בלבד)" />
+          <button class="btn" id="l-book">העבר תיק מסונן למשרד</button>
+        </div>
+        <div id="l-confirm" class="status-ok">✓ הפנייה סווגה מראש לפי סניף, סוג תיק ומספר יחידות ומוכנה לצוות עו"ד אביב טסה (03-612-1313).</div>
+      </section>
+
+      <section class="card">
+        <h2>2. עוזר AI אינטראקטיבי לדיירים ויזמים</h2>
+        <div class="chat-log" id="l-log">
+          <div class="msg bot">שלום! אני העוזר הדיגיטלי של <strong>משרד עורכי דין אביב טסה</strong> (מומחים במקרקעין והתחדשות עירונית). שאלו אותי על פינוי-בינוי, הרוב הדרוש, דייר סרבן, היטלי השבחה או הסניפים ברמת גן ובקריית מוצקין.</div>
+        </div>
+        <div class="quick-row">
+          <button class="chip-btn" data-q="מי משלם את שכר הטרחה של עו"ד הדיירים בפינוי-בינוי?">מי משלם שכ"ט דיירים?</button>
+          <button class="chip-btn" data-q="איך מטפלים בדייר סרבן בפרויקט?">טיפול בדייר סרבן</button>
+          <button class="chip-btn" data-q="איפה נמצאים הסניפים ומה הטלפון?">כתובות סניפים וטלפון</button>
+        </div>
+        <div class="chat-input-row">
+          <input type="text" id="l-input" placeholder="כתוב שאלה בנושא פינוי-בינוי, המפקח על הבתים המשותפים או הפקעות..." />
+          <button class="btn btn-cyan" id="l-send">שלח</button>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <script>
+    const roleEl = document.getElementById("case-role");
+    const unitsEl = document.getElementById("units-count");
+    const branchEl = document.getElementById("branch-pref");
+    const outBox = document.getElementById("tasa-out");
+
+    function updateCase() {
+      const r = roleEl.value;
+      const u = Number(unitsEl.value);
+      const b = branchEl.value === "rg" ? "רמת גן (דרך אבא הלל 7)" : "קריית מוצקין (קדיש לוז 11)";
+      document.getElementById("units-lbl").textContent = u + " דירות";
+
+      if (r === "tenants") {
+        const track = u >= 24 ? "מתחם פינוי-בינוי קלאסי" : "תמ\"א 38 / התחדשות בניינית";
+        outBox.innerHTML = `<div style="color:var(--emerald);font-weight:800">סיווג AI: ${track} (${u} יח"ד)</div><div style="font-size:0.86rem;color:var(--muted);margin-top:4px">שלב מומלץ: הכנת מכרז יזמים שקוף, מינוי מפקח בנייה והסכם מפורט המגן על ערבויות הדיירים. סניף מטפל: ${b}.</div>`;
+      } else if (r === "developer") {
+        outBox.innerHTML = `<div style="color:var(--cyan);font-weight:800">סיווג AI: ליווי יזמי, תכנון ובנייה והיטלי השבחה</div><div style="font-size:0.86rem;color:var(--muted);margin-top:4px">בחינת כדאיות, הפחתת היטלי השבחה, התנגדויות לתכניות והסכמי קומבינציה. סניף מטפל: ${b}.</div>`;
+      } else if (r === "litigation") {
+        outBox.innerHTML = `<div style="color:var(--amber);font-weight:800">סיווג AI: ליטיגציה מקרקעין / המפקח על הבתים המשותפים</div><div style="font-size:0.86rem;color:var(--muted);margin-top:4px">הליך ממוקד לתביעות דייר סרבן, סכסוכי שכנים או בוררויות נדל"ן. סניף מטפל: ${b}.</div>`;
+      } else {
+        outBox.innerHTML = `<div style="color:var(--cyan);font-weight:800">סיווג AI: דייר קיים בפרויקט מלווה</div><div style="font-size:0.86rem;color:var(--muted);margin-top:4px">הגישה הישירה לפורטל הדיירים (getStatus) תוקנה ומונגשת ישירות מכאן לצפייה בסטטוס התיק.</div>`;
+      }
+    }
+    [roleEl, unitsEl, branchEl].forEach(x => x.addEventListener("input", updateCase));
+    updateCase();
+
+    document.getElementById("l-book").addEventListener("click", () => {
+      document.getElementById("l-confirm").style.display = "block";
+    });
+
+    const log = document.getElementById("l-log");
+    const inp = document.getElementById("l-input");
+    function getReply(q) {
+      const t = q.toLowerCase();
+      if (t.includes("שכר") || t.includes("שכ\"ט") || t.includes("משלם")) {
+        return "בעסקאות התחדשות עירונית (פינוי-בינוי ותמ\"א 38), מקובל כי היזם הנבחר הוא שנושא בעלות שכר הטרחה של עורך הדין המייצג את הדיירים — בכפוף להסכם ייצוג מסודר וללא ניגוד עניינים (העו\"ד נאמן לדיירים בלבד).";
+      }
+      if (t.includes("סרבן") || t.includes("מפקח")) {
+        return "משרדנו מייצג בתביעות דייר סרבן בפני המפקח על הבתים המשותפים ובתי המשפט. בשלב הראשון בוחנים אם הסירוב סביר (למשל מגבלות גיל/נגישות/חוסר שוויון בתמורות) לפני הגשת תביעה.";
+      }
+      if (t.includes("סניפ") || t.includes("טלפון") || t.includes("כתוב") || t.includes("רמת גן") || t.includes("מוצקין")) {
+        return "סניף מרכז: דרך אבא הלל 7, רמת גן | סניף צפון: רח' קדיש לוז 11, קריית מוצקין. טלפון משרד: 03-612-1313 | מייל: aviv@tasalaw.co.il.";
+      }
+      return "כדי שנכווין אתכם בדיוק למסמכים הנכונים, בחרו מימין את סוג הפנייה ומספר הדירות — והסוכן יפיק סיכום מוכן לתיאום שיחה עם עו\"ד מהצוות.";
+    }
+    function send(text) {
+      const val = (text ?? inp.value).trim();
+      if (!val) return;
+      const u = document.createElement("div");
+      u.className = "msg user";
+      u.textContent = val;
+      log.appendChild(u);
+      if (!text) inp.value = "";
+      setTimeout(() => {
+        const b = document.createElement("div");
+        b.className = "msg bot";
+        b.textContent = getReply(val);
+        log.appendChild(b);
+        log.scrollTop = log.scrollHeight;
+      }, 220);
+    }
+    document.getElementById("l-send").addEventListener("click", () => send());
+    inp.addEventListener("keydown", e => { if (e.key === "Enter") send(); });
+    document.querySelectorAll(".chip-btn").forEach(b => b.addEventListener("click", () => send(b.dataset.q)));
+  </script>
+</body>
+</html>

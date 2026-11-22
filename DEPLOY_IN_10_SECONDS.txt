@@ -1,0 +1,14 @@
+איך מעלים את כל 6 הדו"חות והדמואים לאינטרנט בחינם תוך 10 שניות (HTTPS אמיתי לשליחה ב-WhatsApp):
+
+1. היכנסו לכתובת: https://app.netlify.com/drop
+2. גררו את התיקייה `public_showcase` הזו אל תוך הדף בדפדפן.
+3. מיד תקבלו קישור HTTPS חי (למשל: https://something.netlify.app).
+4. לכל לקוח תוכלו לשלוח קישור ישיר ופעיל לנייד שלו:
+   - יהל אנרגיה: <BASE_URL>/trojan_demos/demo_yahelenergy.html
+   - טריפל אס: <BASE_URL>/trojan_demos/demo_triplesolar.html
+   - עו"ד אביב טסה: <BASE_URL>/trojan_demos/demo_tasalaw.html
+   - CyberTeam360: <BASE_URL>/trojan_demos/demo_cyberteam360.html
+   - דורית סלע: <BASE_URL>/trojan_demos/demo_doritsela.html
+   - מאי פיננסים: <BASE_URL>/trojan_demos/demo_mayfn.html
+
+חלופה: להעלות את תוכן `public_showcase` ל-GitHub Pages או Cloudflare Pages בחינם.

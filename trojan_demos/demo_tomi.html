@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>דמו יועץ שיפוצים AI ואומדן תקציב — TOMI קבלן שיפוצים</title>
+  <style>
+    :root { --bg:#070d16; --card:#101a2c; --cyan:#22d3ee; --emerald:#10b981; --amber:#f59e0b; --text:#e2e8f0; --muted:#94a3b8; }
+    * { box-sizing:border-box; }
+    body { margin:0; padding:24px 16px; background:radial-gradient(circle at top right,rgba(34,211,238,0.12),transparent 45%),var(--bg); color:var(--text); font-family:"Segoe UI",Tahoma,Arial,sans-serif; }
+    .wrap { max-width:1080px; margin:0 auto; }
+    .banner { display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:12px; background:rgba(34,211,238,0.12); border:1px solid rgba(34,211,238,0.4); border-radius:14px; padding:14px 18px; margin-bottom:20px; }
+    .grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(340px,1fr)); gap:18px; }
+    .card { background:var(--card); border:1px solid rgba(34,211,238,0.22); border-radius:16px; padding:20px; display:flex; flex-direction:column; gap:14px; }
+    h2 { margin:0; font-size:1.12rem; color:var(--cyan); }
+    label { display:block; font-size:0.86rem; color:var(--muted); margin-bottom:5px; }
+    input, select { width:100%; padding:10px 12px; border-radius:9px; border:1px solid rgba(148,163,184,0.3); background:#060c14; color:var(--text); font-size:0.94rem; }
+    .result-box { background:#060c14; border:1px solid rgba(16,185,129,0.35); border-radius:12px; padding:14px; }
+    .chat-log { height:285px; overflow-y:auto; background:#060c14; border:1px solid rgba(34,211,238,0.2); border-radius:12px; padding:12px; display:flex; flex-direction:column; gap:10px; }
+    .msg { max-width:86%; padding:10px 13px; border-radius:12px; font-size:0.9rem; line-height:1.5; }
+    .msg.bot { align-self:flex-start; background:rgba(34,211,238,0.12); border:1px solid rgba(34,211,238,0.28); }
+    .msg.user { align-self:flex-end; background:rgba(16,185,129,0.2); border:1px solid rgba(16,185,129,0.4); }
+    .quick-row { display:flex; flex-wrap:wrap; gap:6px; }
+    .chip-btn { background:rgba(255,255,255,0.05); border:1px solid rgba(34,211,238,0.3); color:var(--text); border-radius:999px; padding:5px 11px; font-size:0.8rem; cursor:pointer; }
+    .chat-input-row { display:flex; gap:8px; }
+    .btn { padding:10px 16px; border-radius:9px; border:none; font-weight:700; cursor:pointer; background:var(--emerald); color:#04150e; font-size:0.9rem; }
+    .btn-cyan { background:var(--cyan); color:#04151a; }
+    .status-ok { color:var(--emerald); font-weight:700; font-size:0.9rem; display:none; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="banner">
+      <div>
+        <strong style="color:var(--cyan)">דמו חי ("הסוס הטרויאני") עבור TOMI — קבלן שיפוצים וגמר במרכז</strong>
+        <div style="font-size:0.86rem;color:var(--muted)">אומדן מהיר לשיפוץ דירה קומפלט, שיפוץ וילה, עבודות גבס וגמר במרכז</div>
+      </div>
+      <a class="btn btn-cyan" href="../geo_audits/audit_tomi.html" style="text-decoration:none">צפה בדו"ח GEO המלא</a>
+    </div>
+
+    <div class="grid">
+      <section class="card">
+        <h2>1. אומדן שיפוץ מהיר ומיון לידים (מחליף 3 טפסים סטטיים)</h2>
+        <div>
+          <label for="to-type">סוג העבודה</label>
+          <select id="to-type">
+            <option value="villa">שיפוץ וילה וגמר יוקרה</option>
+            <option value="apt">שיפוץ דירה קומפלט במרכז</option>
+            <option value="gypsum">עבודות גבס מעוצבות וצבע</option>
+          </select>
+        </div>
+        <div>
+          <label for="to-sqm">גודל הנכס (במ"ר): <strong id="to-lbl" style="color:var(--cyan)">130 מ"ר</strong></label>
+          <input type="range" id="to-sqm" min="40" max="450" step="10" value="130" />
+        </div>
+        <div class="result-box" id="to-out"></div>
+        <div class="chat-input-row">
+          <input type="text" id="to-phone" placeholder="שם + נייד לתיאום הצעת מחיר באתר (דמו)" />
+          <button class="btn" id="to-book">הזמן בדיקה בבית</button>
+        </div>
+        <div id="to-confirm" class="status-ok">✓ הבקשה סווגה עם גודל נכס וסוג שיפוץ ל-TOMI (052-4827400 / telopro@gmail.com).</div>
+      </section>
+
+      <section class="card">
+        <h2>2. עוזר AI של TOMI שיפוצים</h2>
+        <div class="chat-log" id="to-log">
+          <div class="msg bot">שלום! אני העוזר של <strong>TOMI - קבלן שיפוצים במרכז</strong>. מתכננים שיפוץ דירה קומפלט, שיפוץ וילה, עבודות גמר או עבודות גבס מעוצבות? שאלו אותי עכשיו.</div>
+        </div>
+        <div class="quick-row">
+          <button class="chip-btn" data-q="באילו ערים במרכז אתם מבצעים עבודות?">אזורי שירות במרכז</button>
+          <button class="chip-btn" data-q="כמה זמן לוקח שיפוץ דירה קומפלט?">זמנים לשיפוץ דירה</button>
+          <button class="chip-btn" data-q="מה המספר הישיר של הקבלן?">טלפון ישיר של תומי</button>
+        </div>
+        <div class="chat-input-row">
+          <input type="text" id="to-input" placeholder="שאל על שיפוץ דירה קומפלט, וילה, גבס וצבע..." />
+          <button class="btn btn-cyan" id="to-send">שלח</button>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <script>
+    const tp = document.getElementById("to-type");
+    const sq = document.getElementById("to-sqm");
+    const out = document.getElementById("to-out");
+
+    function updateT() {
+      const t = tp.value, sqm = Number(sq.value);
+      document.getElementById("to-lbl").textContent = sqm + ' מ"ר';
+      const rates = { villa: [4800, 8200], apt: [3200, 5200], gypsum: [900, 1800] };
+      const [lo, hi] = rates[t];
+      out.innerHTML = `<div style="color:var(--emerald);font-weight:800">אומדן ראשוני (${sqm} מ"ר): ₪${(sqm * lo).toLocaleString("he-IL")} – ₪${(sqm * hi).toLocaleString("he-IL")}</div><div style="font-size:0.86rem;color:var(--muted);margin-top:4px">להצעת מחיר מדויקת ומפורטת מגיעים לסיור בדירה/בווילה.</div>`;
+    }
+    [tp, sq].forEach(x => x.addEventListener("input", updateT));
+    updateT();
+
+    document.getElementById("to-book").addEventListener("click", () => {
+      document.getElementById("to-confirm").style.display = "block";
+    });
+
+    const log = document.getElementById("to-log");
+    const inp = document.getElementById("to-input");
+    function getReply(q) {
+      const s = q.toLowerCase();
+      if (s.includes("אזור") || s.includes("ערים") || s.includes("מרכז")) {
+        return "TOMI מבצעת פרויקטים של שיפוץ יוקרה וקבלנות גמר בכל גוש דן והמרכז — תל אביב, רמת גן, הרצליה, רעננה, פתח תקווה והשרון.";
+      }
+      if (s.includes("זמן") || s.includes("דירה")) {
+        return "שיפוץ דירה קומפלט אורך לרוב בין 6 ל-12 שבועות בהתאם להיקף ההריסה, האינסטלציה, החשמל ועבודות הגמר והגבס.";
+      }
+      if (s.includes("טלפ") || s.includes("מספר")) {
+        return "טלפון ישיר: 052-4827400 | מייל: telopro@gmail.com.";
+      }
+      return "בחרו מימין את גודל הדירה/הווילה והשאירו פרטים לתיאום סיור והצעת מחיר מסודרת.";
+    }
+    function send(text) {
+      const val = (text ?? inp.value).trim();
+      if (!val) return;
+      const u = document.createElement("div");
+      u.className = "msg user";
+      u.textContent = val;
+      log.appendChild(u);
+      if (!text) inp.value = "";
+      setTimeout(() => {
+        const b = document.createElement("div");
+        b.className = "msg bot";
+        b.textContent = getReply(val);
+        log.appendChild(b);
+        log.scrollTop = log.scrollHeight;
+      }, 220);
+    }
+    document.getElementById("to-send").addEventListener("click", () => send());
+    inp.addEventListener("keydown", e => { if (e.key === "Enter") send(); });
+    document.querySelectorAll(".chip-btn").forEach(b => b.addEventListener("click", () => send(b.dataset.q)));
+  </script>
+</body>
+</html>

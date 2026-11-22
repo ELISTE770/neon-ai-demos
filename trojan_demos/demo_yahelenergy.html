@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>דמו סוכן AI ומחשבון תשואה סולארית — יהל אנרגיה</title>
+  <style>
+    :root { --bg:#07111a; --card:#0d1c29; --cyan:#22d3ee; --emerald:#10b981; --amber:#f59e0b; --text:#e2e8f0; --muted:#94a3b8; }
+    * { box-sizing:border-box; }
+    body { margin:0; padding:24px 16px; background:radial-gradient(circle at top right,rgba(16,185,129,0.12),transparent 45%),var(--bg); color:var(--text); font-family:"Segoe UI",Tahoma,Arial,sans-serif; }
+    .wrap { max-width:1080px; margin:0 auto; }
+    .banner { display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:12px; background:rgba(16,185,129,0.12); border:1px solid rgba(16,185,129,0.4); border-radius:14px; padding:14px 18px; margin-bottom:20px; }
+    .banner strong { color:var(--emerald); }
+    .grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(340px,1fr)); gap:18px; }
+    .card { background:var(--card); border:1px solid rgba(34,211,238,0.22); border-radius:16px; padding:20px; display:flex; flex-direction:column; gap:14px; }
+    h1 { margin:0; font-size:1.35rem; }
+    h2 { margin:0; font-size:1.12rem; color:var(--cyan); }
+    label { display:block; font-size:0.86rem; color:var(--muted); margin-bottom:5px; }
+    input, select { width:100%; padding:10px 12px; border-radius:9px; border:1px solid rgba(148,163,184,0.3); background:#060c14; color:var(--text); font-size:0.94rem; }
+    .result-box { background:#060c14; border:1px solid rgba(16,185,129,0.35); border-radius:12px; padding:14px; }
+    .big-num { font-size:1.55rem; font-weight:800; color:var(--emerald); }
+    .chat-log { height:290px; overflow-y:auto; background:#060c14; border:1px solid rgba(34,211,238,0.2); border-radius:12px; padding:12px; display:flex; flex-direction:column; gap:10px; }
+    .msg { max-width:86%; padding:10px 13px; border-radius:12px; font-size:0.9rem; line-height:1.5; }
+    .msg.bot { align-self:flex-start; background:rgba(34,211,238,0.12); border:1px solid rgba(34,211,238,0.28); }
+    .msg.user { align-self:flex-end; background:rgba(16,185,129,0.2); border:1px solid rgba(16,185,129,0.4); }
+    .quick-row { display:flex; flex-wrap:wrap; gap:6px; }
+    .chip-btn { background:rgba(255,255,255,0.05); border:1px solid rgba(34,211,238,0.3); color:var(--text); border-radius:999px; padding:5px 11px; font-size:0.8rem; cursor:pointer; }
+    .chip-btn:hover { background:rgba(34,211,238,0.18); }
+    .chat-input-row { display:flex; gap:8px; }
+    .btn { padding:10px 16px; border-radius:9px; border:none; font-weight:700; cursor:pointer; background:var(--emerald); color:#04150e; font-size:0.9rem; }
+    .btn-cyan { background:var(--cyan); color:#04151a; }
+    .status-ok { color:var(--emerald); font-weight:700; font-size:0.9rem; display:none; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="banner">
+      <div>
+        <strong>דמו חי ("הסוס הטרויאני") עבור יהל אנרגיה — Yahel Energy</strong>
+        <div style="font-size:0.86rem;color:var(--muted)">מותאם אישית לגגות מסחריים וחקלאיים (700+ מ"ר), השכרת גגות, שותפות והקמה IN HOUSE • כפר מל"ל</div>
+      </div>
+      <a class="btn btn-cyan" href="../geo_audits/audit_yahelenergy.html" style="text-decoration:none">צפה בדו"ח GEO המלא</a>
+    </div>
+
+    <div class="grid">
+      <!-- Instant Roof Yield Calculator -->
+      <section class="card">
+        <h2>1. מחשבון היתכנות ותשואה מיידית (סינון 700+ מ"ר)</h2>
+        <div>
+          <label for="roof-area">שטח הגג הפנוי (במ"ר): <strong id="area-label" style="color:var(--cyan)">1,500 מ"ר</strong></label>
+          <input type="range" id="roof-area" min="300" max="10000" step="100" value="1500" />
+        </div>
+        <div>
+          <label for="roof-type">סוג הנכס</label>
+          <select id="roof-type">
+            <option value="industrial">מבנה תעשייה / מפעל / מחסן לוגיסטי</option>
+            <option value="agri">מבנה חקלאי (רפת / לול / חממה)</option>
+            <option value="fence">גדר סולארית / קירוי חניון</option>
+          </select>
+        </div>
+        <div>
+          <label for="deal-track">מסלול מועדף</label>
+          <select id="deal-track">
+            <option value="rent">השכרת גג (מימון ותחזוקה מלאה של יהל אנרגיה)</option>
+            <option value="partner">שותפות והקמת מיזם משותף (חלוקת תקבולים)</option>
+            <option value="own">הקמת מערכת סולארית בבעלות מלאה (IN HOUSE)</option>
+          </select>
+        </div>
+        <div class="result-box" id="calc-output"></div>
+        <div style="border-top:1px solid rgba(148,163,184,0.18);padding-top:10px;">
+          <label for="lead-phone">קבלת חוות דעת הנדסית ובדיקת תב"ע/חיבור חח"י (הדגמה):</label>
+          <div class="chat-input-row">
+            <input type="text" id="lead-phone" placeholder="שם + טלפון (דמו בלבד — לא נשלח חיצונית)" />
+            <button class="btn" id="btn-book">תיאום שיחת היתכנות</button>
+          </div>
+          <div id="book-confirm" class="status-ok" style="margin-top:8px;">✓ התיאום נרשם בהצלחה בדמו! ליד מסונן מעל 700 מ"ר נשלח מיד לצוות יהל אנרגיה (077-2101336).</div>
+        </div>
+      </section>
+
+      <!-- Interactive Hebrew AI Advisor -->
+      <section class="card">
+        <h2>2. סוכן AI ייעודי לבעלי גגות מסחריים (24/7)</h2>
+        <div class="chat-log" id="chat-log">
+          <div class="msg bot">שלום! אני העוזר החכם של <strong>יהל אנרגיה</strong> (כפר מל"ל). אני מסייע לבעלי מפעלים, מחסנים ומשקים חקלאיים לבדוק התאמה למערכת סולארית, השכרת גג או אגירה. מה גודל הגג שלכם?</div>
+        </div>
+        <div class="quick-row">
+          <button class="chip-btn" data-q="יש לי גג של 1,800 מ&quot;ר, מה עדיף — השכרה או הקמה?">גג 1,800 מ"ר: השכרה או הקמה?</button>
+          <button class="chip-btn" data-q="האם אתם עושים מערכות אגירת חשמל או גדרות?">אגירת חשמל וגדרות</button>
+          <button class="chip-btn" data-q="מה התנאי מינימום לגודל הגג?">מה סף המינימום במ"ר?</button>
+          <button class="chip-btn" data-q="איך יוצרים קשר ישיר?">טלפון וכתובת בכפר מל"ל</button>
+        </div>
+        <div class="chat-input-row">
+          <input type="text" id="chat-input" placeholder="שאל שאלה על השכרת גג, שותפות, אגירה או לוחות זמנים..." />
+          <button class="btn btn-cyan" id="chat-send">שלח</button>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <script>
+    const areaEl = document.getElementById("roof-area");
+    const typeEl = document.getElementById("roof-type");
+    const trackEl = document.getElementById("deal-track");
+    const calcOut = document.getElementById("calc-output");
+
+    function updateCalc() {
+      const sqm = Number(areaEl.value);
+      document.getElementById("area-label").textContent = sqm.toLocaleString("he-IL") + ' מ"ר';
+      if (sqm < 700) {
+        calcOut.innerHTML = `<div style="color:var(--amber);font-weight:700;">שימו לב: שטח הגג (${sqm} מ"ר) מתחת לסף המסחרי המינימלי (700 מ"ר).</div><div style="font-size:0.86rem;color:var(--muted);margin-top:4px;">המערכת סיננה אוטומטית את הפנייה כדי לא לבזבז זמן למהנדסי המכירות, או מפנה לבדיקת צירוף גגות סמוכים.</div>`;
+        return;
+      }
+      const kwEst = Math.round(sqm / 7.5);
+      const track = trackEl.value;
+      if (track === "rent") {
+        const rentLow = Math.round(sqm * 32);
+        const rentHigh = Math.round(sqm * 48);
+        calcOut.innerHTML = `<div>הספק מוערך: <strong>~${kwEst} kWp</strong></div><div class="big-num">₪${rentLow.toLocaleString("he-IL")} – ₪${rentHigh.toLocaleString("he-IL")} / שנה</div><div style="font-size:0.85rem;color:var(--muted)">הכנסה פאסיבית משוערת מהשכרת גג (אפס השקעה מצד בעל הנכס, תחזוקה מלאה ע"י יהל אנרגיה).</div>`;
+      } else if (track === "partner") {
+        const revEst = Math.round(kwEst * 720 * 0.45);
+        calcOut.innerHTML = `<div>הספק מוערך: <strong>~${kwEst} kWp</strong></div><div class="big-num">~₪${revEst.toLocaleString("he-IL")} / שנה (חלק שותפות)</div><div style="font-size:0.85rem;color:var(--muted)">הערכה ראשונית למסלול שותפות וחלוקת תקבולים — בכפוף לסקר גג וחיבור חח"י.</div>`;
+      } else {
+        const revEst = Math.round(kwEst * 760);
+        calcOut.innerHTML = `<div>הספק מוערך: <strong>~${kwEst} kWp</strong></div><div class="big-num">~₪${revEst.toLocaleString("he-IL")} הכנסה שנתית בבעלות</div><div style="font-size:0.85rem;color:var(--muted)">הקמה מקצה לקצה IN HOUSE כולל תכנון, רישוי והתחברות לרשת.</div>`;
+      }
+    }
+    [areaEl, typeEl, trackEl].forEach(el => el.addEventListener("input", updateCalc));
+    updateCalc();
+
+    document.getElementById("btn-book").addEventListener("click", () => {
+      document.getElementById("book-confirm").style.display = "block";
+    });
+
+    const log = document.getElementById("chat-log");
+    const input = document.getElementById("chat-input");
+
+    function replyFor(q) {
+      const t = q.toLowerCase();
+      if (t.includes("מינימום") || t.includes("700")) {
+        return "יהל אנרגיה מתמחה במערכות מסחריות וחקלאיות בגגות של 700 מ\"ר ומעלה (מפעלים, מחסנים, רפתות, לולים וחממות). אם יש לכם מספר מבנים צמודים שמגיעים יחד ל-700+ מ\"ר — ניתן לבחון איחוד מערכת.";
+      }
+      if (t.includes("אגיר") || t.includes("גדר")) {
+        return "בהחלט! מעבר לגגות מסחריים, אנחנו מתכננים ומקימים מערכות אגירת חשמל סולארי (להגדלת ההחזר בשעות שיא) וכן מערכות סולאריות דו-צדדיות על גדרות וגדרות ביטחון במתחמים תעשייתיים וחקלאיים.";
+      }
+      if (t.includes("קשר") || t.includes("טלפון") || t.includes("כתובת")) {
+        return "אפשר לדבר ישירות עם המשרד בטלפון 077-2101336 או במייל office@yahelenergy.co.il. המשרדים ממוקמים ברח' עין חי 40, כפר מל\"ל.";
+      }
+      if (t.includes("השכר") || t.includes("הקמ") || t.includes("1,800") || t.includes("עדיף")) {
+        return "בגג של 1,800 מ\"ר ההספק הוא כ-240 kWp. בהשכרת גג אתם מקבלים הכנסה קבועה ללא השקעה וללא סיכון; בהקמה עצמית התשואה השנתית גבוהה יותר. אפשר גם לבחור במסלול שותפות! בדקו במחשבון מימין את המספרים המדויקים לגג שלכם.";
+      }
+      return "מעולה — הצוות ההנדסי שלנו (IN HOUSE) מבצע את כל התהליך משלב הבדיקה, הרישוי, ההקמה והתחזוקה. הזינו את שטח הגג במחשבון או השאירו פרטים ונחזור עם היתכנות תוך 24 שעות.";
+    }
+
+    function sendMsg(text) {
+      const val = (text ?? input.value).trim();
+      if (!val) return;
+      const u = document.createElement("div");
+      u.className = "msg user";
+      u.textContent = val;
+      log.appendChild(u);
+      if (!text) input.value = "";
+      setTimeout(() => {
+        const b = document.createElement("div");
+        b.className = "msg bot";
+        b.textContent = replyFor(val);
+        log.appendChild(b);
+        log.scrollTop = log.scrollHeight;
+      }, 220);
+      log.scrollTop = log.scrollHeight;
+    }
+
+    document.getElementById("chat-send").addEventListener("click", () => sendMsg());
+    input.addEventListener("keydown", (e) => { if (e.key === "Enter") sendMsg(); });
+    document.querySelectorAll(".chip-btn").forEach(btn => btn.addEventListener("click", () => sendMsg(btn.dataset.q)));
+  </script>
+</body>
+</html>

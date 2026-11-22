@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>דמו יועץ AI לבדיקת חיסכון במשכנתא — מאי פיננסים</title>
+  <style>
+    :root { --bg:#070d16; --card:#101a2c; --cyan:#22d3ee; --emerald:#10b981; --amber:#f59e0b; --text:#e2e8f0; --muted:#94a3b8; }
+    * { box-sizing:border-box; }
+    body { margin:0; padding:24px 16px; background:radial-gradient(circle at top right,rgba(16,185,129,0.12),transparent 45%),var(--bg); color:var(--text); font-family:"Segoe UI",Tahoma,Arial,sans-serif; }
+    .wrap { max-width:1080px; margin:0 auto; }
+    .banner { display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:12px; background:rgba(16,185,129,0.12); border:1px solid rgba(16,185,129,0.4); border-radius:14px; padding:14px 18px; margin-bottom:20px; }
+    .grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(340px,1fr)); gap:18px; }
+    .card { background:var(--card); border:1px solid rgba(34,211,238,0.22); border-radius:16px; padding:20px; display:flex; flex-direction:column; gap:14px; }
+    h2 { margin:0; font-size:1.12rem; color:var(--cyan); }
+    label { display:block; font-size:0.86rem; color:var(--muted); margin-bottom:5px; }
+    input, select { width:100%; padding:10px 12px; border-radius:9px; border:1px solid rgba(148,163,184,0.3); background:#060c14; color:var(--text); font-size:0.94rem; }
+    .result-box { background:#060c14; border:1px solid rgba(16,185,129,0.35); border-radius:12px; padding:14px; }
+    .chat-log { height:285px; overflow-y:auto; background:#060c14; border:1px solid rgba(34,211,238,0.2); border-radius:12px; padding:12px; display:flex; flex-direction:column; gap:10px; }
+    .msg { max-width:86%; padding:10px 13px; border-radius:12px; font-size:0.9rem; line-height:1.5; }
+    .msg.bot { align-self:flex-start; background:rgba(34,211,238,0.12); border:1px solid rgba(34,211,238,0.28); }
+    .msg.user { align-self:flex-end; background:rgba(16,185,129,0.2); border:1px solid rgba(16,185,129,0.4); }
+    .quick-row { display:flex; flex-wrap:wrap; gap:6px; }
+    .chip-btn { background:rgba(255,255,255,0.05); border:1px solid rgba(34,211,238,0.3); color:var(--text); border-radius:999px; padding:5px 11px; font-size:0.8rem; cursor:pointer; }
+    .chat-input-row { display:flex; gap:8px; }
+    .btn { padding:10px 16px; border-radius:9px; border:none; font-weight:700; cursor:pointer; background:var(--emerald); color:#04150e; font-size:0.9rem; }
+    .btn-cyan { background:var(--cyan); color:#04151a; }
+    .status-ok { color:var(--emerald); font-weight:700; font-size:0.9rem; display:none; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="banner">
+      <div>
+        <strong style="color:var(--emerald)">דמו חי ("הסוס הטרויאני") עבור מאי פיננסים — משכנתאות, מחזור ואיחוד הלוואות</strong>
+        <div style="font-size:0.86rem;color:var(--muted)">יועץ AI לבדיקת כדאיות מחזור, איחוד הלוואות ומסורבי בנקים עם סינון לידים אוטומטי</div>
+      </div>
+      <a class="btn btn-cyan" href="../geo_audits/audit_mayfn.html" style="text-decoration:none">צפה בדו"ח GEO המלא</a>
+    </div>
+
+    <div class="grid">
+      <section class="card">
+        <h2>1. סימולטור חיסכון וסינון תיק משכנתא</h2>
+        <div>
+          <label for="m-goal">מטרת הפנייה</label>
+          <select id="m-goal">
+            <option value="refi">מחזור משכנתא קיימת והוזלת החזר חודשי</option>
+            <option value="consol">איחוד הלוואות להחזר חודשי אחד</option>
+            <option value="new">לקיחת משכנתא חדשה + מו"מ מול הבנקים</option>
+            <option value="declined">מסורבי בנקים / הלוואה חוץ-בנקאית כנגד נכס</option>
+          </select>
+        </div>
+        <div>
+          <label for="m-amount">סכום משכנתא / חוב מבוקש: <strong id="m-amt-lbl" style="color:var(--cyan)">₪1,400,000</strong></label>
+          <input type="range" id="m-amount" min="300000" max="4500000" step="50000" value="1400000" />
+        </div>
+        <div>
+          <label for="m-years">תקופת פריסה מבוקשת: <strong id="m-yr-lbl" style="color:var(--cyan)">20 שנה</strong></label>
+          <input type="range" id="m-years" min="5" max="30" step="1" value="20" />
+        </div>
+        <div class="result-box" id="m-out"></div>
+        <div class="chat-input-row">
+          <input type="text" id="m-phone" placeholder="שם + טלפון לבדיקת התיק ללא עלות (דמו)" />
+          <button class="btn" id="m-book">תאם בדיקת יועץ</button>
+        </div>
+        <div id="m-confirm" class="status-ok">✓ התיק סווג ונשלח לצוות מאי פיננסים (050-8623360 / *6629).</div>
+      </section>
+
+      <section class="card">
+        <h2>2. יועץ AI זמין 24/7 למבקרים באתר</h2>
+        <div class="chat-log" id="m-log">
+          <div class="msg bot">שלום! אני העוזר החכם של <strong>מאי פיננסים</strong>. מתלבטים אם כדאי למחזר משכנתא, איך לאחד הלוואות חונקות להחזר אחד, או מה עושים אם הבנק סירב? שאלו אותי עכשיו.</div>
+        </div>
+        <div class="quick-row">
+          <button class="chip-btn" data-q="מה אתם עושים עבור מסורבי בנקים?">פתרונות למסורבי בנקים</button>
+          <button class="chip-btn" data-q="כמה אפשר לחסוך באיחוד הלוואות למשכנתא?">איחוד הלוואות</button>
+          <button class="chip-btn" data-q="מה הטלפון הישיר ואיפה השירות ניתן?">טלפון ואזורי שירות</button>
+        </div>
+        <div class="chat-input-row">
+          <input type="text" id="m-input" placeholder="שאל על מחזור, משכנתא הפוכה, איחוד הלוואות או מו&quot;מ בנקאי..." />
+          <button class="btn btn-cyan" id="m-send">שלח</button>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <script>
+    const goalEl = document.getElementById("m-goal");
+    const amtEl = document.getElementById("m-amount");
+    const yrEl = document.getElementById("m-years");
+    const mOut = document.getElementById("m-out");
+
+    function updateM() {
+      const g = goalEl.value;
+      const P = Number(amtEl.value);
+      const yrs = Number(yrEl.value);
+      document.getElementById("m-amt-lbl").textContent = "₪" + P.toLocaleString("he-IL");
+      document.getElementById("m-yr-lbl").textContent = yrs + " שנה";
+
+      const r = 0.048 / 12;
+      const n = yrs * 12;
+      const pmt = Math.round((P * r) / (1 - Math.pow(1 + r, -n)));
+
+      if (g === "refi") {
+        const estSave = Math.round(P * 0.065);
+        mOut.innerHTML = `<div style="color:var(--emerald);font-weight:800">חיסכון פוטנציאלי משוער במחזור: ~₪${estSave.toLocaleString("he-IL")}</div><div style="font-size:0.86rem;color:var(--muted);margin-top:4px">החזר מייצג משוער: ~₪${pmt.toLocaleString("he-IL")}/חודש (אומדן ראשוני לפני בניית תמהיל ומו"מ מול הבנקים).</div>`;
+      } else if (g === "consol") {
+        const drop = Math.round(pmt * 0.45);
+        mOut.innerHTML = `<div style="color:var(--cyan);font-weight:800">החזר מאוחד משוער: ~₪${pmt.toLocaleString("he-IL")}/חודש</div><div style="font-size:0.86rem;color:var(--muted);margin-top:4px">בפריסה מול נכס ניתן לרוב להפחית עומס חודשי בכ-~₪${drop.toLocaleString("he-IL")} מדי חודש.</div>`;
+      } else if (g === "declined") {
+        mOut.innerHTML = `<div style="color:var(--amber);font-weight:800">מסלול חילוץ למסורבי בנקים / מימון כנגד נכס</div><div style="font-size:0.86rem;color:var(--muted);margin-top:4px">מיפוי סיבת הסירוב, פתרון גישור חוץ-בנקאי מפוקח ובניית תכנית חזרה לבנק בעתיד.</div>`;
+      } else {
+        mOut.innerHTML = `<div style="color:var(--emerald);font-weight:800">אומדן החזר חודשי למשכנתא חדשה: ~₪${pmt.toLocaleString("he-IL")}/חודש</div><div style="font-size:0.86rem;color:var(--muted);margin-top:4px">בניית תמהיל אופטימלי ומכרז ריביות מול כל הבנקים.</div>`;
+      }
+    }
+    [goalEl, amtEl, yrEl].forEach(x => x.addEventListener("input", updateM));
+    updateM();
+
+    document.getElementById("m-book").addEventListener("click", () => {
+      document.getElementById("m-confirm").style.display = "block";
+    });
+
+    const log = document.getElementById("m-log");
+    const inp = document.getElementById("m-input");
+    function getReply(q) {
+      const t = q.toLowerCase();
+      if (t.includes("מסורב") || t.includes("חוץ")) {
+        return "גם אם בנק אחד או יותר סירבו, אנחנו יודעים לנתח את הנתונים הפיננסיים/BDI ולבנות פתרונות מימון מפוקחים כנגד נכס או מסלולי שיקום שמאפשרים קבלת אשראי.";
+      }
+      if (t.includes("איחוד") || t.includes("הלווא")) {
+        return "באיחוד הלוואות מאחדים את כל ההלוואות הקצרות והיקרות לתוך משכנתא ארוכה ובריבית נמוכה יותר — מה שיכול להוריד את ההחזר החודשי באלפי שקלים.";
+      }
+      if (t.includes("טלפון") || t.includes("שירות")) {
+        return "השירות ניתן בכל רחבי הארץ! ניתן לחייג ישירות ל-050-8623360 או *6629, או לשלוח הודעה דרך הכפתור מימין.";
+      }
+      return "בחרו מימין את מטרת הפנייה, סכום המשכנתא ותקופת הפריסה — והמערכת תכין עבורכם אבחון ראשוני חינמי לפני שיחה עם יועץ.";
+    }
+    function send(text) {
+      const val = (text ?? inp.value).trim();
+      if (!val) return;
+      const u = document.createElement("div");
+      u.className = "msg user";
+      u.textContent = val;
+      log.appendChild(u);
+      if (!text) inp.value = "";
+      setTimeout(() => {
+        const b = document.createElement("div");
+        b.className = "msg bot";
+        b.textContent = getReply(val);
+        log.appendChild(b);
+        log.scrollTop = log.scrollHeight;
+      }, 220);
+    }
+    document.getElementById("m-send").addEventListener("click", () => send());
+    inp.addEventListener("keydown", e => { if (e.key === "Enter") send(); });
+    document.querySelectorAll(".chip-btn").forEach(b => b.addEventListener("click", () => send(b.dataset.q)));
+  </script>
+</body>
+</html>

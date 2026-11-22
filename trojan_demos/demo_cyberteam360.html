@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>דמו טריאז' סייבר AI ומחשבון חשיפה ארגוני — CyberTeam360</title>
+  <style>
+    :root { --bg:#060a12; --card:#0d1626; --cyan:#22d3ee; --emerald:#10b981; --amber:#f59e0b; --rose:#f43f5e; --text:#e2e8f0; --muted:#94a3b8; }
+    * { box-sizing:border-box; }
+    body { margin:0; padding:24px 16px; background:radial-gradient(circle at top right,rgba(34,211,238,0.12),transparent 45%),var(--bg); color:var(--text); font-family:"Segoe UI",Tahoma,Arial,sans-serif; }
+    .wrap { max-width:1080px; margin:0 auto; }
+    .banner { display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:12px; background:rgba(34,211,238,0.12); border:1px solid rgba(34,211,238,0.42); border-radius:14px; padding:14px 18px; margin-bottom:20px; }
+    .grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(340px,1fr)); gap:18px; }
+    .card { background:var(--card); border:1px solid rgba(34,211,238,0.22); border-radius:16px; padding:20px; display:flex; flex-direction:column; gap:14px; }
+    h2 { margin:0; font-size:1.12rem; color:var(--cyan); }
+    label { display:block; font-size:0.86rem; color:var(--muted); margin-bottom:5px; }
+    input, select { width:100%; padding:10px 12px; border-radius:9px; border:1px solid rgba(148,163,184,0.3); background:#050911; color:var(--text); font-size:0.94rem; }
+    .result-box { background:#050911; border:1px solid rgba(16,185,129,0.35); border-radius:12px; padding:14px; }
+    .chat-log { height:285px; overflow-y:auto; background:#050911; border:1px solid rgba(34,211,238,0.2); border-radius:12px; padding:12px; display:flex; flex-direction:column; gap:10px; }
+    .msg { max-width:86%; padding:10px 13px; border-radius:12px; font-size:0.9rem; line-height:1.5; }
+    .msg.bot { align-self:flex-start; background:rgba(34,211,238,0.12); border:1px solid rgba(34,211,238,0.28); }
+    .msg.user { align-self:flex-end; background:rgba(16,185,129,0.2); border:1px solid rgba(16,185,129,0.4); }
+    .quick-row { display:flex; flex-wrap:wrap; gap:6px; }
+    .chip-btn { background:rgba(255,255,255,0.05); border:1px solid rgba(34,211,238,0.3); color:var(--text); border-radius:999px; padding:5px 11px; font-size:0.8rem; cursor:pointer; }
+    .chat-input-row { display:flex; gap:8px; }
+    .btn { padding:10px 16px; border-radius:9px; border:none; font-weight:700; cursor:pointer; background:var(--emerald); color:#04150e; font-size:0.9rem; }
+    .btn-cyan { background:var(--cyan); color:#04151a; }
+    .status-ok { color:var(--emerald); font-weight:700; font-size:0.9rem; display:none; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="banner">
+      <div>
+        <strong style="color:var(--cyan)">דמו חי ("הסוס הטרויאני") עבור CyberTeam360 — SOC / PenTest / AI Security</strong>
+        <div style="font-size:0.86rem;color:var(--muted)">עמדת טריאז' 24/7 לאירועי סייבר, הערכת תקציב SOC ובדיקות תיקון 13 • הרכבת 58, תל אביב-יפו</div>
+      </div>
+      <a class="btn btn-cyan" href="../geo_audits/audit_cyberteam360.html" style="text-decoration:none">צפה בדו"ח GEO המלא</a>
+    </div>
+
+    <div class="grid">
+      <section class="card">
+        <h2>1. טריאז' סייבר מיידי ומעריך היקף שירות (מחליף טופס מושבת)</h2>
+        <div>
+          <label for="cyber-need">צורך ארגוני דחוף</label>
+          <select id="cyber-need">
+            <option value="ir">חירום: חשד לאירוע סייבר / כופרה פעיל (IR 24/7)</option>
+            <option value="soc">הקמת ניטור ותגובה מנוהל SOC &amp; MDR 24/7</option>
+            <option value="pentest">בדיקת חדירה (PenTest) / Red Teaming למערכת או אפליקציה</option>
+            <option value="ai_grc">אבטחת AI / Secure SDLC ל-LLM + עמידה בתיקון 13 / ISO 27001</option>
+          </select>
+        </div>
+        <div>
+          <label for="endpoints">מספר תחנות קצה / שרתים בארגון: <strong id="ep-lbl" style="color:var(--cyan)">120 עמדות</strong></label>
+          <input type="range" id="endpoints" min="15" max="1000" step="15" value="120" />
+        </div>
+        <div class="result-box" id="cyber-out"></div>
+        <div class="chat-input-row">
+          <input type="text" id="c-phone" placeholder="שם + נייד לשיחת CISO מיידית (דמו בלבד)" />
+          <button class="btn" id="c-book">הקפץ התראת טריאז' לצוות</button>
+        </div>
+        <div id="c-confirm" class="status-ok">✓ כרטיס טריאז' מועדף סווג ונשלח למוקד CyberTeam360 (050-6525252 / dudim@cyberteam360.com).</div>
+      </section>
+
+      <section class="card">
+        <h2>2. עוזר AI לאבחון ראשוני של סמנכ"לים ומנהלי IT</h2>
+        <div class="chat-log" id="c-log">
+          <div class="msg bot">שלום! אני עוזר הטריאז' והייעוץ של <strong>CyberTeam360</strong>. זקוקים למענה חירום IR, הצעת מחיר ל-SOC מנוהל 24/7, בדיקת חדירה או בקרת אבטחה למודלי AI ארגוניים?</div>
+        </div>
+        <div class="quick-row">
+          <button class="chip-btn" data-q="מה זמן התגובה באירוע חירום IR ו-SOC 24/7?">זמן תגובה SOC 24/7 ו-IR</button>
+          <button class="chip-btn" data-q="מה כולל שירות AI Security וממשל LLM?">מה כולל AI Security?</button>
+          <button class="chip-btn" data-q="איך מכינים את הארגון לתיקון 13 לחוק הגנת הפרטיות?">מוכנות לתיקון 13</button>
+        </div>
+        <div class="chat-input-row">
+          <input type="text" id="c-input" placeholder="כתוב שאלה על SOC, בדיקות חדירה, vCISO או חירום..." />
+          <button class="btn btn-cyan" id="c-send">שלח</button>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <script>
+    const needEl = document.getElementById("cyber-need");
+    const epEl = document.getElementById("endpoints");
+    const out = document.getElementById("cyber-out");
+
+    function updateCyber() {
+      const n = needEl.value;
+      const ep = Number(epEl.value);
+      document.getElementById("ep-lbl").textContent = ep.toLocaleString("he-IL") + " עמדות";
+      if (n === "ir") {
+        out.innerHTML = `<div style="color:var(--rose);font-weight:800">עדיפות #1 — הקפצת צוות Incident Response 24/7</div><div style="font-size:0.86rem;color:var(--muted);margin-top:4px">בידוד עמדות ראשוני וניתוח לוגים תוך דקות עבור ${ep} תחנות. מומלץ לחייג מיידית ל-050-6525252.</div>`;
+      } else if (n === "soc") {
+        const monthly = Math.round(4500 + ep * 38);
+        out.innerHTML = `<div style="color:var(--emerald);font-weight:800">אומדן SOC &amp; MDR מנוהל: ~₪${monthly.toLocaleString("he-IL")} / חודש</div><div style="font-size:0.86rem;color:var(--muted);margin-top:4px">כולל ניטור 24/7, חוקרי SOC ישראליים ומענה אוטומטי ל-${ep} נכסים.</div>`;
+      } else if (n === "pentest") {
+        const est = ep > 250 ? "₪24,000 – ₪42,000" : "₪14,000 – ₪24,000";
+        out.innerHTML = `<div style="color:var(--cyan);font-weight:800">טווח מוערך לבדיקת חדירה / Red Team: ${est}</div><div style="font-size:0.86rem;color:var(--muted);margin-top:4px">דו"ח ממצאים מנהלים + ליווי תיקונים ובדיקה חוזרת.</div>`;
+      } else {
+        out.innerHTML = `<div style="color:var(--amber);font-weight:800">חבילת AI Security + GRC (תיקון 13 / ISO)</div><div style="font-size:0.86rem;color:var(--muted);margin-top:4px">סקירת Secure SDLC ל-LLM, נהלי ממשל AI והיערכות מלאה לרגולציה הישראלית.</div>`;
+      }
+    }
+    [needEl, epEl].forEach(x => x.addEventListener("input", updateCyber));
+    updateCyber();
+
+    document.getElementById("c-book").addEventListener("click", () => {
+      document.getElementById("c-confirm").style.display = "block";
+    });
+
+    const log = document.getElementById("c-log");
+    const inp = document.getElementById("c-input");
+    function getReply(q) {
+      const t = q.toLowerCase();
+      if (t.includes("זמן") || t.includes("24/7") || t.includes("ir") || t.includes("soc")) {
+        return "מוקד ה-SOC וה-MDR של CyberTeam360 פועל 24/7 עם זמני תגובה (SLA) מיידיים לזיהוי ובלימה. במקרי חירום פעילים אנחנו זמינים ישירות גם ב-050-6525252.";
+      }
+      if (t.includes("ai") || t.includes("llm")) {
+        return "שירות ה-AI Security שלנו בוחן הזרקות פרומפט (Prompt Injection), זליגת מידע רגיש לספקי מודלים חיצוניים, הקשחת Secure SDLC והטמעת מדיניות ממשל AI בטוחה בארגון.";
+      }
+      if (t.includes("13") || t.includes("פרטיות") || t.includes("grc")) {
+        return "אנחנו מלווים ארגונים דרך שירותי vCISO ו-GRC במיפוי מאגרי המידע, תיקוני אבטחה, בדיקות חדירה תקופתיות ועמידה בדרישות תיקון 13 לחוק הגנת הפרטיות ותקן ISO 27001.";
+      }
+      return "בחרו מימין את הצורך הארגוני ומספר העמדות לקבלת הערכת תקציב מיידית, או השאירו נייד לשיחה חוזרת עם מומחה מהמשרד ברכבת 58 תל אביב.";
+    }
+    function send(text) {
+      const val = (text ?? inp.value).trim();
+      if (!val) return;
+      const u = document.createElement("div");
+      u.className = "msg user";
+      u.textContent = val;
+      log.appendChild(u);
+      if (!text) inp.value = "";
+      setTimeout(() => {
+        const b = document.createElement("div");
+        b.className = "msg bot";
+        b.textContent = getReply(val);
+        log.appendChild(b);
+        log.scrollTop = log.scrollHeight;
+      }, 220);
+    }
+    document.getElementById("c-send").addEventListener("click", () => send());
+    inp.addEventListener("keydown", e => { if (e.key === "Enter") send(); });
+    document.querySelectorAll(".chip-btn").forEach(b => b.addEventListener("click", () => send(b.dataset.q)));
+  </script>
+</body>
+</html>

@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>דמו סוכן AI ומתאים מסלולים — טריפל אס אנרגיה מתחדשת</title>
+  <style>
+    :root { --bg:#070d16; --card:#0f1928; --cyan:#22d3ee; --emerald:#10b981; --amber:#f59e0b; --text:#e2e8f0; --muted:#94a3b8; }
+    * { box-sizing:border-box; }
+    body { margin:0; padding:24px 16px; background:radial-gradient(circle at top left,rgba(34,211,238,0.12),transparent 45%),var(--bg); color:var(--text); font-family:"Segoe UI",Tahoma,Arial,sans-serif; }
+    .wrap { max-width:1080px; margin:0 auto; }
+    .banner { display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:12px; background:rgba(34,211,238,0.12); border:1px solid rgba(34,211,238,0.4); border-radius:14px; padding:14px 18px; margin-bottom:20px; }
+    .kpi-fix { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-bottom:18px; }
+    .kpi-pill { background:var(--card); border:1px solid rgba(16,185,129,0.35); border-radius:12px; padding:12px; text-align:center; }
+    .kpi-pill strong { display:block; font-size:1.4rem; color:var(--emerald); }
+    .grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(340px,1fr)); gap:18px; }
+    .card { background:var(--card); border:1px solid rgba(34,211,238,0.22); border-radius:16px; padding:20px; display:flex; flex-direction:column; gap:14px; }
+    h2 { margin:0; font-size:1.12rem; color:var(--cyan); }
+    label { display:block; font-size:0.86rem; color:var(--muted); margin-bottom:5px; }
+    input, select { width:100%; padding:10px 12px; border-radius:9px; border:1px solid rgba(148,163,184,0.3); background:#060c14; color:var(--text); font-size:0.94rem; }
+    .result-box { background:#060c14; border:1px solid rgba(34,211,238,0.35); border-radius:12px; padding:14px; }
+    .chat-log { height:280px; overflow-y:auto; background:#060c14; border:1px solid rgba(34,211,238,0.2); border-radius:12px; padding:12px; display:flex; flex-direction:column; gap:10px; }
+    .msg { max-width:86%; padding:10px 13px; border-radius:12px; font-size:0.9rem; line-height:1.5; }
+    .msg.bot { align-self:flex-start; background:rgba(34,211,238,0.12); border:1px solid rgba(34,211,238,0.28); }
+    .msg.user { align-self:flex-end; background:rgba(16,185,129,0.2); border:1px solid rgba(16,185,129,0.4); }
+    .quick-row { display:flex; flex-wrap:wrap; gap:6px; }
+    .chip-btn { background:rgba(255,255,255,0.05); border:1px solid rgba(34,211,238,0.3); color:var(--text); border-radius:999px; padding:5px 11px; font-size:0.8rem; cursor:pointer; }
+    .chat-input-row { display:flex; gap:8px; }
+    .btn { padding:10px 16px; border-radius:9px; border:none; font-weight:700; cursor:pointer; background:var(--emerald); color:#04150e; font-size:0.9rem; }
+    .btn-cyan { background:var(--cyan); color:#04151a; }
+    .status-ok { color:var(--emerald); font-weight:700; font-size:0.9rem; display:none; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="banner">
+      <div>
+        <strong style="color:var(--cyan)">דמו חי ("הסוס הטרויאני") עבור טריפל אס אנרגיה מתחדשת — TRIPLES</strong>
+        <div style="font-size:0.86rem;color:var(--muted)">מתקן את מוני ה-0% בדף הבית + ממליץ ללקוח בין Day 1, B.O.T, Full, Profit וגגות פרטיים • מגדל העמק</div>
+      </div>
+      <a class="btn btn-cyan" href="../geo_audits/audit_triplesolar.html" style="text-decoration:none">צפה בדו"ח GEO המלא</a>
+    </div>
+
+    <div class="kpi-fix">
+      <div class="kpi-pill"><span>תיקון תצוגה מ-0% לנתון חי:</span><strong>~12%–18% תשואה</strong><small style="color:var(--muted)">בהתקנה מסחרית</small></div>
+      <div class="kpi-pill"><span>השקעה נדרשת במסלול B.O.T:</span><strong>₪0 מראש</strong><small style="color:var(--muted)">העסק מקבל הכנסה פאסיבית</small></div>
+      <div class="kpi-pill"><span>שירות ותחזוקה Full Service:</span><strong>365 יום בשנה</strong><small style="color:var(--muted)">מוקד מגדל העמק</small></div>
+    </div>
+
+    <div class="grid">
+      <section class="card">
+        <h2>1. מתאים מסלולים אינטראקטיבי (במקום קישורי /# שבורים)</h2>
+        <div>
+          <label for="customer-segment">סוג הנכס / לקוח</label>
+          <select id="customer-segment">
+            <option value="private">בית פרטי / פרגולה סולארית</option>
+            <option value="commercial_no_cap">עסק / מפעל / רפת — מעוניין בהכנסה בלי להשקיע הון</option>
+            <option value="commercial_cap">עסק / תעשייה — מעוניין בתשואה מקסימלית והשקעה עצמית</option>
+          </select>
+        </div>
+        <div>
+          <label for="sqm-input">שטח גג / פרגולה משוער (במ"ר): <strong id="sqm-lbl" style="color:var(--cyan)">400 מ"ר</strong></label>
+          <input type="range" id="sqm-input" min="60" max="5000" step="20" value="400" />
+        </div>
+        <div class="result-box" id="track-rec"></div>
+        <div class="chat-input-row">
+          <input type="text" id="t-phone" placeholder="שם + נייד לתיאום סקר גג (הדגמה)" />
+          <button class="btn" id="t-book">שלח מסלול לצוות TRIPLES</button>
+        </div>
+        <div id="t-confirm" class="status-ok">✓ הליד סווג עם המסלול המדויק ומוכן לשיחת המכירה (sales@triplesolar.co.il / 074-710-74-31).</div>
+      </section>
+
+      <section class="card">
+        <h2>2. עוזר AI ללקוחות טריפל אס</h2>
+        <div class="chat-log" id="t-log">
+          <div class="msg bot">שלום! ברוכים הבאים לעוזר האוטומטי של <strong>טריפל אס (TRIPLES)</strong> ממגדל העמק. מתלבטים בין מסלול Day 1, B.O.T, פרגולה סולארית לבית או חווה סולארית? שאלו אותי!</div>
+        </div>
+        <div class="quick-row">
+          <button class="chip-btn" data-q="מה ההבדל בין Day 1 ל-B.O.T?">הבדל בין Day 1 ל-B.O.T</button>
+          <button class="chip-btn" data-q="האם אתם מתקינים גם פרגולות סולאריות לבתים פרטיים?">פרגולה סולארית לבית</button>
+          <button class="chip-btn" data-q="איך יוצרים קשר עם הסניף במגדל העמק?">קשר ומגדל העמק</button>
+        </div>
+        <div class="chat-input-row">
+          <input type="text" id="t-input" placeholder="כתוב שאלה על המסלולים, תחזוקה או אזורי שירות..." />
+          <button class="btn btn-cyan" id="t-send">שלח</button>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <script>
+    const seg = document.getElementById("customer-segment");
+    const sqmEl = document.getElementById("sqm-input");
+    const recBox = document.getElementById("track-rec");
+
+    function updateRec() {
+      const s = seg.value;
+      const sqm = Number(sqmEl.value);
+      document.getElementById("sqm-lbl").textContent = sqm.toLocaleString("he-IL") + ' מ"ר';
+      const kw = Math.round(sqm / 7.5);
+      if (s === "private") {
+        const annual = Math.round(Math.min(kw, 30) * 850);
+        recBox.innerHTML = `<div style="color:var(--emerald);font-weight:800;font-size:1.1rem">מסלול מומלץ: גג פרטי / פרגולה סולארית</div><div style="margin-top:6px">הספק משוער: ~${Math.min(kw, 30)} kWp • חיסכון והכנסה מוערכת: <strong>~₪${annual.toLocaleString("he-IL")} בשנה</strong>.</div>`;
+      } else if (s === "commercial_no_cap") {
+        const annual = Math.round(sqm * 36);
+        recBox.innerHTML = `<div style="color:var(--cyan);font-weight:800;font-size:1.1rem">מסלול מומלץ: B.O.T / Day 1 להשכרת גג</div><div style="margin-top:6px">טריפל אס מממנת ומקימה ללא השקעה מצדכם. צפי דמי שכירות משוערים: <strong>~₪${annual.toLocaleString("he-IL")} בשנה</strong>.</div>`;
+      } else {
+        const annual = Math.round(kw * 760);
+        recBox.innerHTML = `<div style="color:var(--amber);font-weight:800;font-size:1.1rem">מסלול מומלץ: Full / Profit (הקמה ותפעול מלא)</div><div style="margin-top:6px">הספק משוער: ~${kw} kWp • תפוקה שנתית משוערת: <strong>~₪${annual.toLocaleString("he-IL")} בשנה</strong> + תחזוקה מלאה.</div>`;
+      }
+    }
+    [seg, sqmEl].forEach(x => x.addEventListener("input", updateRec));
+    updateRec();
+
+    document.getElementById("t-book").addEventListener("click", () => {
+      document.getElementById("t-confirm").style.display = "block";
+    });
+
+    const log = document.getElementById("t-log");
+    const inp = document.getElementById("t-input");
+    function getReply(q) {
+      const t = q.toLowerCase();
+      if (t.includes("day 1") || t.includes("b.o.t")) {
+        return "במסלול B.O.T טריפל אס משקיעה את כל ההון בהקמה ובתחזוקה ואתם נהנים מהכנסה שוטפת ללא הוצאה; מסלול Day 1 מאפשר לקבל תזרים מיידי כבר מתחילת הדרך. נשמח להתאים לפי גודל הגג שלכם.";
+      }
+      if (t.includes("פרגול") || t.includes("פרטי")) {
+        return "כן! בנוסף לפרויקטים מסחריים וחקלאיים, טריפל אס מתקינה מערכות סולאריות על בתים פרטיים וכן פרגולות סולאריות אסתטיות שמייצרות חשמל וצל יחד.";
+      }
+      if (t.includes("מגדל העמק") || t.includes("קשר") || t.includes("טלפון")) {
+        return "משרדי ההנהלה במגדל העמק (מפעלי העמק, א.ת דרומי). טלפון: 074-710-74-31 | מייל מכירות: sales@triplesolar.co.il.";
+      }
+      return "שאלה מצוינת! במסלול Full Service אנחנו מלווים גם בפיקוח, ניקוי ותחזוקה שוטפת כדי שהתפוקה לא תיפול. בחרו את גודל הגג מימין כדי לראות המלצת מסלול מיידית.";
+    }
+    function send(text) {
+      const val = (text ?? inp.value).trim();
+      if (!val) return;
+      const u = document.createElement("div");
+      u.className = "msg user";
+      u.textContent = val;
+      log.appendChild(u);
+      if (!text) inp.value = "";
+      setTimeout(() => {
+        const b = document.createElement("div");
+        b.className = "msg bot";
+        b.textContent = getReply(val);
+        log.appendChild(b);
+        log.scrollTop = log.scrollHeight;
+      }, 220);
+    }
+    document.getElementById("t-send").addEventListener("click", () => send());
+    inp.addEventListener("keydown", e => { if (e.key === "Enter") send(); });
+    document.querySelectorAll(".chip-btn").forEach(b => b.addEventListener("click", () => send(b.dataset.q)));
+  </script>
+</body>
+</html>

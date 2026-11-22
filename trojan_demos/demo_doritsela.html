@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>דמו מסנן פרויקטים ועוזר AI — דורית סלע אדריכלות ועיצוב פנים</title>
+  <style>
+    :root { --bg:#0a0b10; --card:#141722; --cyan:#22d3ee; --emerald:#10b981; --amber:#f59e0b; --text:#f1f5f9; --muted:#94a3b8; }
+    * { box-sizing:border-box; }
+    body { margin:0; padding:24px 16px; background:radial-gradient(circle at top right,rgba(245,158,11,0.1),transparent 45%),var(--bg); color:var(--text); font-family:"Segoe UI",Tahoma,Arial,sans-serif; }
+    .wrap { max-width:1080px; margin:0 auto; }
+    .banner { display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:12px; background:rgba(245,158,11,0.12); border:1px solid rgba(245,158,11,0.42); border-radius:14px; padding:14px 18px; margin-bottom:20px; }
+    .grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(340px,1fr)); gap:18px; }
+    .card { background:var(--card); border:1px solid rgba(245,158,11,0.22); border-radius:16px; padding:20px; display:flex; flex-direction:column; gap:14px; }
+    h2 { margin:0; font-size:1.12rem; color:var(--amber); }
+    label { display:block; font-size:0.86rem; color:var(--muted); margin-bottom:5px; }
+    input, select { width:100%; padding:10px 12px; border-radius:9px; border:1px solid rgba(148,163,184,0.3); background:#07090e; color:var(--text); font-size:0.94rem; }
+    .result-box { background:#07090e; border:1px solid rgba(16,185,129,0.35); border-radius:12px; padding:14px; }
+    .chat-log { height:285px; overflow-y:auto; background:#07090e; border:1px solid rgba(245,158,11,0.22); border-radius:12px; padding:12px; display:flex; flex-direction:column; gap:10px; }
+    .msg { max-width:86%; padding:10px 13px; border-radius:12px; font-size:0.9rem; line-height:1.5; }
+    .msg.bot { align-self:flex-start; background:rgba(245,158,11,0.12); border:1px solid rgba(245,158,11,0.28); }
+    .msg.user { align-self:flex-end; background:rgba(16,185,129,0.2); border:1px solid rgba(16,185,129,0.4); }
+    .quick-row { display:flex; flex-wrap:wrap; gap:6px; }
+    .chip-btn { background:rgba(255,255,255,0.05); border:1px solid rgba(245,158,11,0.35); color:var(--text); border-radius:999px; padding:5px 11px; font-size:0.8rem; cursor:pointer; }
+    .chat-input-row { display:flex; gap:8px; }
+    .btn { padding:10px 16px; border-radius:9px; border:none; font-weight:700; cursor:pointer; background:var(--emerald); color:#04150e; font-size:0.9rem; }
+    .btn-amber { background:var(--amber); color:#1a1003; }
+    .status-ok { color:var(--emerald); font-weight:700; font-size:0.9rem; display:none; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="banner">
+      <div>
+        <strong style="color:var(--amber)">דמו חי ("הסוס הטרויאני") עבור דורית סלע — אדריכלות ועיצוב פנים יוקרתי</strong>
+        <div style="font-size:0.86rem;color:var(--muted)">מסנן פרויקטים לפי שטח, סוג נכס ותקציב + תיאום פגישת היכרות יוקרתית • כנרת 15, בני ברק</div>
+      </div>
+      <a class="btn btn-amber" href="../geo_audits/audit_doritsela.html" style="text-decoration:none">צפה בדו"ח GEO המלא</a>
+    </div>
+
+    <div class="grid">
+      <section class="card">
+        <h2>1. שאלון התאמה מהיר לפרויקט יוקרה (מונע פניות סרק)</h2>
+        <div>
+          <label for="proj-type">סוג הפרויקט</label>
+          <select id="proj-type">
+            <option value="villa">בניית בית פרטי / וילת יוקרה מהיסוד</option>
+            <option value="apt">אדריכלות ועיצוב פנים לדירת יוקרה / פנטהאוז</option>
+            <option value="comm">עיצוב מסחרי / חנות מותג / משרדי הנהלה</option>
+          </select>
+        </div>
+        <div>
+          <label for="proj-sqm">שטח מתוכנן (במ"ר): <strong id="p-sqm-lbl" style="color:var(--amber)">280 מ"ר</strong></label>
+          <input type="range" id="proj-sqm" min="80" max="900" step="20" value="280" />
+        </div>
+        <div>
+          <label for="proj-budget">תקציב ביצוע משוער (בנייה/שיפוץ)</label>
+          <select id="proj-budget">
+            <option value="high">2.5 מיליון ₪ ומעלה (מלא + פיקוח עליון)</option>
+            <option value="mid">1.2 – 2.5 מיליון ₪</option>
+            <option value="low">מתחת ל-800 אלף ₪</option>
+          </select>
+        </div>
+        <div class="result-box" id="arch-out"></div>
+        <div class="chat-input-row">
+          <input type="text" id="a-phone" placeholder="שם + נייד לתיאום פגישה בסטודיו (דמו בלבד)" />
+          <button class="btn" id="a-book">שלח תיק מסונן לסטודיו</button>
+        </div>
+        <div id="a-confirm" class="status-ok">✓ פרטי הפרויקט המסונן סווגו ומוכנים לצוות דורית סלע (052-8577448 / dorit@doritsela.co.il).</div>
+      </section>
+
+      <section class="card">
+        <h2>2. יועץ AI אישי של הסטודיו (24/7)</h2>
+        <div class="chat-log" id="a-log">
+          <div class="msg bot">שלום! ברוכים הבאים לסטודיו <strong>דורית סלע אדריכלות ועיצוב פנים</strong>. אנחנו מלווים וילות יוקרה, דירות וחללים מסחריים משלב הקונספט והרישוי ועד הפיקוח העליון והמסירה. במה מתמקד הפרויקט שלכם?</div>
+        </div>
+        <div class="quick-row">
+          <button class="chip-btn" data-q="האם הליווי כולל רישוי, יועצים ופיקוח עליון עד מפתח?">ליווי כולל פיקוח עליון?</button>
+          <button class="chip-btn" data-q="האם אתם מתכננים גם חנויות מותג וחללים מסחריים?">עיצוב חנויות מותג</button>
+          <button class="chip-btn" data-q="איפה הסטודיו ואיך קובעים פגישה?">כתובת הסטודיו וטלפון</button>
+        </div>
+        <div class="chat-input-row">
+          <input type="text" id="a-input" placeholder="כתוב שאלה על תכנון וילה, לוחות זמנים או פגישת ייעוץ..." />
+          <button class="btn btn-amber" id="a-send">שלח</button>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <script>
+    const pType = document.getElementById("proj-type");
+    const pSqm = document.getElementById("proj-sqm");
+    const pBud = document.getElementById("proj-budget");
+    const archOut = document.getElementById("arch-out");
+
+    function updateArch() {
+      const t = pType.value;
+      const sqm = Number(pSqm.value);
+      const b = pBud.value;
+      document.getElementById("p-sqm-lbl").textContent = sqm + ' מ"ר';
+      if (b === "low") {
+        archOut.innerHTML = `<div style="color:var(--amber);font-weight:800">מסלול ייעוץ ממוקד (סינון תקציב)</div><div style="font-size:0.86rem;color:var(--muted);margin-top:4px">ליווי מלא של תכנון אדריכלי, יועצים ופיקוח עליון מתאים לרוב לפרויקטים בהיקף רחב יותר — המערכת מתאמת ציפיות מראש לפני פגישה.</div>`;
+        return;
+      }
+      const label = t === "villa" ? "תכנון אדריכלי + עיצוב פנים לוילה" : t === "apt" ? "עיצוב אדריכלי לדירת יוקרה" : "קונספט ועיצוב חלל מסחרי";
+      const timeline = t === "villa" ? "14–22 חודשים (כולל רישוי)" : "5–9 חודשים";
+      archOut.innerHTML = `<div style="color:var(--emerald);font-weight:800">התאמה גבוהה: ${label} (${sqm} מ"ר)</div><div style="font-size:0.86rem;color:var(--muted);margin-top:4px">לו"ז משוער: ${timeline} • כולל עבודה מול יועצים, קבלנים ופיקוח עליון עד קבלת המפתח.</div>`;
+    }
+    [pType, pSqm, pBud].forEach(x => x.addEventListener("input", updateArch));
+    updateArch();
+
+    document.getElementById("a-book").addEventListener("click", () => {
+      document.getElementById("a-confirm").style.display = "block";
+    });
+
+    const log = document.getElementById("a-log");
+    const inp = document.getElementById("a-input");
+    function getReply(q) {
+      const t = q.toLowerCase();
+      if (t.includes("פיקוח") || t.includes("רישוי") || t.includes("מפתח")) {
+        return "כן — המשרד מלווה את הפרויקט מקצה לקצה: מהקונספט האדריכלי והיתרי הבנייה, דרך תיאום יועצים וקבלנים ועד פיקוח עליון והלבשת הבית עד למסירה.";
+      }
+      if (t.includes("מסחר") || t.includes("חנו") || t.includes("מותג")) {
+        return "בהחלט! מעבר לבתי ודירות יוקרה, דורית סלע מתכננת ומעצבת חנויות מותג, אולמות תצוגה וחללים עסקיים ייחודיים בארץ ובחו\"ל.";
+      }
+      if (t.includes("סטודיו") || t.includes("כתובת") || t.includes("טלפון")) {
+        return "הסטודיו ממוקם ברח' כנרת 15, בני ברק. טלפון ישיר: 052-8577448 | מייל: dorit@doritsela.co.il.";
+      }
+      return "מלאו את השאלון מימין (סוג נכס, שטח ותקציב) כדי שצוות הסטודיו יגיע לפגישה מוכן עם לוחות זמנים ותוכנית עבודה מדויקת.";
+    }
+    function send(text) {
+      const val = (text ?? inp.value).trim();
+      if (!val) return;
+      const u = document.createElement("div");
+      u.className = "msg user";
+      u.textContent = val;
+      log.appendChild(u);
+      if (!text) inp.value = "";
+      setTimeout(() => {
+        const b = document.createElement("div");
+        b.className = "msg bot";
+        b.textContent = getReply(val);
+        log.appendChild(b);
+        log.scrollTop = log.scrollHeight;
+      }, 220);
+    }
+    document.getElementById("a-send").addEventListener("click", () => send());
+    inp.addEventListener("keydown", e => { if (e.key === "Enter") send(); });
+    document.querySelectorAll(".chip-btn").forEach(b => b.addEventListener("click", () => send(b.dataset.q)));
+  </script>
+</body>
+</html>

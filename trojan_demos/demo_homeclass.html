@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>דמו מעריך שיפוצי יוקרה ועבודות גמר — הום קלאס (HomeClass)</title>
+  <style>
+    :root { --bg:#070d16; --card:#101a2c; --cyan:#22d3ee; --emerald:#10b981; --amber:#f59e0b; --text:#e2e8f0; --muted:#94a3b8; }
+    * { box-sizing:border-box; }
+    body { margin:0; padding:24px 16px; background:radial-gradient(circle at top right,rgba(16,185,129,0.12),transparent 45%),var(--bg); color:var(--text); font-family:"Segoe UI",Tahoma,Arial,sans-serif; }
+    .wrap { max-width:1080px; margin:0 auto; }
+    .banner { display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:12px; background:rgba(16,185,129,0.12); border:1px solid rgba(16,185,129,0.4); border-radius:14px; padding:14px 18px; margin-bottom:20px; }
+    .grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(340px,1fr)); gap:18px; }
+    .card { background:var(--card); border:1px solid rgba(34,211,238,0.22); border-radius:16px; padding:20px; display:flex; flex-direction:column; gap:14px; }
+    h2 { margin:0; font-size:1.12rem; color:var(--cyan); }
+    label { display:block; font-size:0.86rem; color:var(--muted); margin-bottom:5px; }
+    input, select { width:100%; padding:10px 12px; border-radius:9px; border:1px solid rgba(148,163,184,0.3); background:#060c14; color:var(--text); font-size:0.94rem; }
+    .result-box { background:#060c14; border:1px solid rgba(16,185,129,0.35); border-radius:12px; padding:14px; }
+    .chat-log { height:285px; overflow-y:auto; background:#060c14; border:1px solid rgba(34,211,238,0.2); border-radius:12px; padding:12px; display:flex; flex-direction:column; gap:10px; }
+    .msg { max-width:86%; padding:10px 13px; border-radius:12px; font-size:0.9rem; line-height:1.5; }
+    .msg.bot { align-self:flex-start; background:rgba(34,211,238,0.12); border:1px solid rgba(34,211,238,0.28); }
+    .msg.user { align-self:flex-end; background:rgba(16,185,129,0.2); border:1px solid rgba(16,185,129,0.4); }
+    .quick-row { display:flex; flex-wrap:wrap; gap:6px; }
+    .chip-btn { background:rgba(255,255,255,0.05); border:1px solid rgba(34,211,238,0.3); color:var(--text); border-radius:999px; padding:5px 11px; font-size:0.8rem; cursor:pointer; }
+    .chat-input-row { display:flex; gap:8px; }
+    .btn { padding:10px 16px; border-radius:9px; border:none; font-weight:700; cursor:pointer; background:var(--emerald); color:#04150e; font-size:0.9rem; }
+    .btn-cyan { background:var(--cyan); color:#04151a; }
+    .status-ok { color:var(--emerald); font-weight:700; font-size:0.9rem; display:none; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="banner">
+      <div>
+        <strong style="color:var(--emerald)">דמו חי ("הסוס הטרויאני") עבור הום קלאס — עבודות גמר ושיפוצי יוקרה</strong>
+        <div style="font-size:0.86rem;color:var(--muted)">סינון פרויקטים לפי שטח, רמת גמר (יוקרה / כללי / משרדים) ואזור • guy@homeclass.co.il מתוקן</div>
+      </div>
+      <a class="btn btn-cyan" href="../geo_audits/audit_homeclass.html" style="text-decoration:none">צפה בדו"ח GEO המלא</a>
+    </div>
+
+    <div class="grid">
+      <section class="card">
+        <h2>1. אומדן היקף ותקציב שיפוץ / גמר</h2>
+        <div>
+          <label for="h-type">סוג הפרויקט</label>
+          <select id="h-type">
+            <option value="luxury">שיפוץ יוקרה / עבודות גמר אדריכליות</option>
+            <option value="full">שיפוץ כללי מקיף לדירה / בית</option>
+            <option value="office">עבודות גמר ושיפוצי משרדים</option>
+          </select>
+        </div>
+        <div>
+          <label for="h-sqm">שטח משוער (במ"ר): <strong id="h-lbl" style="color:var(--cyan)">160 מ"ר</strong></label>
+          <input type="range" id="h-sqm" min="50" max="600" step="10" value="160" />
+        </div>
+        <div class="result-box" id="h-out"></div>
+        <div class="chat-input-row">
+          <input type="text" id="h-phone" placeholder="שם + נייד לתיאום סיור מהנדס/מפקח (דמו)" />
+          <button class="btn" id="h-book">תאם סיור באתר</button>
+        </div>
+        <div id="h-confirm" class="status-ok">✓ הפרויקט סווג בהצלחה ומוכן לתיאום מול הום קלאס (077-997-2988 / guy@homeclass.co.il).</div>
+      </section>
+
+      <section class="card">
+        <h2>2. עוזר AI של הום קלאס לניהול פרויקטים</h2>
+        <div class="chat-log" id="h-log">
+          <div class="msg bot">שלום! אני העוזר של <strong>הום קלאס - גמרים ושיפוצי יוקרה</strong>. אנחנו מנהלים ומבצעים עבודות גמר, שיפוצי יוקרה, שיפוץ משרדים ופיקוח מקצועי באזור המרכז. באיזה היקף פרויקט מדובר?</div>
+        </div>
+        <div class="quick-row">
+          <button class="chip-btn" data-q="האם אתם עובדים עם אדריכלים ומספקים פיקוח צמוד?">עבודה עם אדריכלים ופיקוח</button>
+          <button class="chip-btn" data-q="האם אתם מבצעים גם שיפוץ משרדים?">שיפוצי משרדים ועסקים</button>
+          <button class="chip-btn" data-q="מה הטלפון והמייל הישיר שלכם?">טלפון ומייל ישיר</button>
+        </div>
+        <div class="chat-input-row">
+          <input type="text" id="h-input" placeholder="שאל על עבודות גמר, משרדים, לוחות זמנים או כתב כמויות..." />
+          <button class="btn btn-cyan" id="h-send">שלח</button>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <script>
+    const tp = document.getElementById("h-type");
+    const sq = document.getElementById("h-sqm");
+    const out = document.getElementById("h-out");
+
+    function updateH() {
+      const t = tp.value;
+      const sqm = Number(sq.value);
+      document.getElementById("h-lbl").textContent = sqm + ' מ"ר';
+      const rates = { luxury: [5500, 9500], full: [3800, 5800], office: [4200, 7200] };
+      const [lo, hi] = rates[t];
+      out.innerHTML = `<div style="color:var(--emerald);font-weight:800">אומדן מסגרת תקציב (${sqm} מ"ר): ₪${(sqm * lo).toLocaleString("he-IL")} – ₪${(sqm * hi).toLocaleString("he-IL")}</div><div style="font-size:0.86rem;color:var(--muted);margin-top:4px">הערכה ראשונית לביצוע + ניהול פרויקט ופיקוח — הצעה מדויקת תינתן לאחר מעבר על תכניות וכתב כמויות.</div>`;
+    }
+    [tp, sq].forEach(x => x.addEventListener("input", updateH));
+    updateH();
+
+    document.getElementById("h-book").addEventListener("click", () => {
+      document.getElementById("h-confirm").style.display = "block";
+    });
+
+    const log = document.getElementById("h-log");
+    const inp = document.getElementById("h-input");
+    function getReply(q) {
+      const s = q.toLowerCase();
+      if (s.includes("אדריכל") || s.includes("פיקוח")) {
+        return "כן — הום קלאס מתמחה בעבודה משותפת צמודה עם אדריכלים ומעצבי פנים, כולל ניהול פרויקט מקיף ופיקוח מקצועי עד למסירה.";
+      }
+      if (s.includes("משרד")) {
+        return "בהחלט! אנחנו מבצעים עבודות גמר מלאות ושיפוצי משרדים במרכז הארץ לפי תכניות ולוחות זמנים מוקפדים.";
+      }
+      if (s.includes("טלפ") || s.includes("מייל")) {
+        return "טלפון: 077-997-2988 | מייל ישיר: guy@homeclass.co.il.";
+      }
+      return "בחרו מימין את סוג הפרויקט והשטח במ\"ר לקבלת אומדן מסגרת והשארת פרטים לסיור באתר.";
+    }
+    function send(text) {
+      const val = (text ?? inp.value).trim();
+      if (!val) return;
+      const u = document.createElement("div");
+      u.className = "msg user";
+      u.textContent = val;
+      log.appendChild(u);
+      if (!text) inp.value = "";
+      setTimeout(() => {
+        const b = document.createElement("div");
+        b.className = "msg bot";
+        b.textContent = getReply(val);
+        log.appendChild(b);
+        log.scrollTop = log.scrollHeight;
+      }, 220);
+    }
+    document.getElementById("h-send").addEventListener("click", () => send());
+    inp.addEventListener("keydown", e => { if (e.key === "Enter") send(); });
+    document.querySelectorAll(".chip-btn").forEach(b => b.addEventListener("click", () => send(b.dataset.q)));
+  </script>
+</body>
+</html>
